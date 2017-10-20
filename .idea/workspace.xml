@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8cc37572-811e-4ce5-a2ff-0f983f3c4c05" name="Default" comment="Test commit">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/NeuralNetwork/NeuralNetwork.iml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/Hackathon 2017.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NeuralNetwork/Neuron.java" afterPath="$PROJECT_DIR$/src/NeuralNetwork/Neuron.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -78,11 +81,6 @@
             <path>
               <item name="Hackathon 2017" type="b2602c69:ProjectViewProjectNode" />
               <item name="Hackathon 2017" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Hackathon 2017" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Hackathon 2017" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Hackathon 2017" type="b2602c69:ProjectViewProjectNode" />
@@ -218,7 +216,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1508541524165</updated>
-      <workItem from="1508541525403" duration="1965000" />
+      <workItem from="1508541525403" duration="2077000" />
     </task>
     <task id="LOCAL-00001" summary="frefre">
       <created>1508541573114</created>
@@ -245,7 +243,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1965000" />
+    <option name="totallyTimeSpent" value="2077000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1015" extended-state="6" />
