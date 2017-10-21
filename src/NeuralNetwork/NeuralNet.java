@@ -1,56 +1,49 @@
 import java.util.List;
 
-/**
- * Represents an artificial neural network with layers containing neurons.
- */
 public class NeuralNet {
-    /**
-    * Neural network id
-    */
+
     private String id;
-    /**
-    * Neural network input layer
-    */
+
     private NeuralNetLayer inputLayer;
-    /**
-    * Neural network hidden layers
-    */
-    private List<NeuralNetLayer> hiddenLayers;
-    /**
-    * Neural network output layer
-    */
+
+    private NeuralNetLayer hiddenLayer;
+
     private NeuralNetLayer outputLayer;
-    /**
-    * Constructs a neural net with all layers present.
-    *
-    * @param id
-    *            Neural network id to be set
-    * @param inputLayer
-    *            Neural network input layer to be set
-    * @param hiddenLayers
-    *            Neural network hidden layers to be set
-    * @param outputLayer
-    *            Neural network output layer to be set
-    */
-    public NeuralNet(String id, NeuralNetLayer inputLayer, List<NeuralNetLayer> hiddenLayers, NeuralNetLayer outputLayer) {
+
+    public NeuralNet(String id, NeuralNetLayer inputLayer, NeuralNetLayer hiddenLayer, NeuralNetLayer outputLayer) {
         this.id = id;
         this.inputLayer = inputLayer;
-        this.hiddenLayers = hiddenLayers;
+        this.hiddenLayer = hiddenLayer;
         this.outputLayer = outputLayer;
     }
+
     /**
-    * Constructs a neural net without hidden layers.
-    *
-    * @param id
-    *            Neural network id to be set
-    * @param inputLayer
-    *            Neural network input layer to be set
-    * @param outputLayer
-    *            Neural network output layer to be set
-    */
+     * Constructs a neural net with one hidden layer.
+     * @param id
+     * @param inputLayer
+     * @param outputLayer
+     */
     public NeuralNet(String id, NeuralNetLayer inputLayer, NeuralNetLayer outputLayer) {
         this.id = id;
         this.inputLayer = inputLayer;
         this.outputLayer = outputLayer;
+    }
+
+    /**
+     * Returns one of the layers in the network
+     * layer 0 = inputLayer
+     * layer 1 = hiddenLayer
+     * layer not(0 or 1) = outputLayer
+     * @param layer
+     * @return
+     */
+    public NeuralNetLayer getInputLayer(int layer) {
+        if (layer == 0) {
+            return inputLayer;
+        } else if (layer == 1) {
+            return hiddenLayer;
+        } else {
+            return outputLayer;
+        }
     }
 }

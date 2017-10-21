@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class NeuronsConnection {
 
     private Neuron fromNeuron;
@@ -9,6 +11,8 @@ public class NeuronsConnection {
     public NeuronsConnection(Neuron fromNeuron, Neuron toNeuron) {
         this.fromNeuron = fromNeuron;
         this.toNeuron = toNeuron;
+        Random rand = new Random();
+        double randNum = rand.nextDouble() * 10.0;
         this.weight = Math.random();
     }
 

@@ -5,8 +5,8 @@ public class ActivationFunction {
 
     }
 
-    public double calculateOutput(double summedInput) {
-        Double sigmoid = 1/(1 + Math.exp(-summedInput));
+    public double calculateOutput(double summedInput, double bias) {
+        Double sigmoid = 1/(1 + Math.exp(-(summedInput - bias)));
         return sigmoid;
     }
 }

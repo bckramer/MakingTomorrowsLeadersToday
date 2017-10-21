@@ -16,4 +16,16 @@ public class NeuralNetLayer {
         this.id = id;
         this.neurons = neurons;
     }
+
+    /**
+     * Retrieves a neuron in the layer by position
+     * @param neuronPos
+     * @return
+     */
+    public Neuron getNeuron(int neuronPos) {
+        if (neuronPos > neurons.size()) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        return neurons.get(neuronPos);
+    }
 }

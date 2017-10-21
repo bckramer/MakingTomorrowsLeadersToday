@@ -15,6 +15,8 @@ public class Neuron {
     private ActivationFunction activationFunction;
     //Calculated output for the neuron
     private double output;
+    //Bias for the neuron
+    private double bias;
 
     //Default neuron
     public Neuron() {
@@ -22,10 +24,17 @@ public class Neuron {
         this.outputConnections = new ArrayList<>();
     }
 
-    public Neuron(ArrayList<NeuronsConnection> inputConnections, ArrayList<NeuronsConnection> outputConnections) {
+    public Neuron(ArrayList<NeuronsConnection> inputConnections, ArrayList<NeuronsConnection> outputConnections, double bias) {
         this.inputConnections = inputConnections;
         this.outputConnections = outputConnections;
         this.output = calculateOutput();
+        this.bias = bias;
+    }
+
+    //Constructor for an input layer
+    public Neuron(double output, double bias) {
+        this.output = output;
+        this.bias = bias;
     }
 
     public Double getOutput() {
@@ -35,9 +44,60 @@ public class Neuron {
     public double calculateOutput() {
         double totalInput = inputSummingFunction.collectOutput(inputConnections);
 
-        output = activationFunction.calculateOutput(totalInput);
+        output = activationFunction.calculateOutput(totalInput, bias);
 
         return output;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<NeuronsConnection> getInputConnections() {
+        return inputConnections;
+    }
+
+    public void setInputConnections(List<NeuronsConnection> inputConnections) {
+        this.inputConnections = inputConnections;
+    }
+
+    public List<NeuronsConnection> getOutputConnections() {
+        return outputConnections;
+    }
+
+    public void setOutputConnections(List<NeuronsConnection> outputConnections) {
+        this.outputConnections = outputConnections;
+    }
+
+    public WeightedSumFunction getInputSummingFunction() {
+        return inputSummingFunction;
+    }
+
+    public void setInputSummingFunction(WeightedSumFunction inputSummingFunction) {
+        this.inputSummingFunction = inputSummingFunction;
+    }
+
+    public ActivationFunction getActivationFunction() {
+        return activationFunction;
+    }
+
+    public void setActivationFunction(ActivationFunction activationFunction) {
+        this.activationFunction = activationFunction;
+    }
+
+    public void setOutput(double output) {
+        this.output = output;
+    }
+
+    public double getBias() {
+        return bias;
+    }
+
+    public void setBias(double bias) {
+        this.bias = bias;
+    }
 }
