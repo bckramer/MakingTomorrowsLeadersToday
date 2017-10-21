@@ -3,6 +3,8 @@ package GeneticAlgorithm;
 import java.util.ArrayList;
 import java.util.Random;
 
+import geom.Rectangle;
+
 public class newUnit {
 	private int index;
 	private int fitness;
@@ -20,7 +22,7 @@ public class newUnit {
 		fitness = 0;
 		isWinner = false;
 	}
-	public newUnit(newUnit offspring){
+	public newUnit(Rectangle offspring){
 		//NeuralNetwork(offspring);
 		fitness = 0;
 		isWinner = false;
