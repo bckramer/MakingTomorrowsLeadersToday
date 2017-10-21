@@ -65,11 +65,11 @@ public class GeneticAlgorithm {
 				new NeuralNet()));
 		return squares;
 	}
-	public ArrayList<Rectangle> createNewPopulation(Rectangle offspring){
+	public ArrayList<Rectangle> createMutatedPopulation(ArrayList<Rectangle> arrNewPop){
 		
-		return squares;
+		return arrNewPop;
 	}
-	public void EvolvePop(ArrayList<Rectangle> winners){
+	public ArrayList<Rectangle> EvolvePop(ArrayList<Rectangle> winners){
 		ArrayList<Rectangle> winnerArr = winners;
 		
 		if(mutateRate == 1 && winnerArr.get(0).getFitness() < 0){
@@ -97,15 +97,15 @@ public class GeneticAlgorithm {
 			}
 			
 			mutation(offspring);
-			
 			offspring.setIndex(i);
-			add(offspring);
+			winnerArr.add(offspring);
 		}
 		if(winnerArr.get(0).getFitness() > getBestFitness()){
 		setBestPopIndex(winnerArr.get(0).getGen());
 		setBestFitness(winnerArr.get(0).getFitness());
 		}
 		squares = sortIndex(squares);
+		return winnerArr;
 		}
 	
 	public ArrayList<Rectangle> sortFitness(ArrayList<Rectangle> preSort){
