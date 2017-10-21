@@ -1,4 +1,3 @@
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +6,9 @@ public class Neuron {
     //Identifier
     private String id;
     //Connections giving info to the neuron
-    protected List<Connection> inputConnections;
+    protected List<NeuronsConnection> inputConnections;
     //Connections stemming out from the neuron
-    protected List<Connection> outputConnections;
+    protected List<NeuronsConnection> outputConnections;
     //
     protected InputSummingFunction inputSummingFunction;
     //
@@ -21,7 +20,7 @@ public class Neuron {
     }
 
     public double calculateOutput() {
-        double totalInput = inputSummingFunction.getOutput(inputConnections);
+        double totalInput = inputSummingFunction.collectOutput(inputConnections);
 
         return activationFunction.getOutput(totalInput);
     }
