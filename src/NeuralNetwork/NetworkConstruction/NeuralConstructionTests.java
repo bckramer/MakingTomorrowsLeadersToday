@@ -6,9 +6,9 @@ public class NeuralConstructionTests {
 
     @Test
     public void RandomNetwork() {
-        RandomNeuralNetwork randomNeuralNetwork = new RandomNeuralNetwork();
-        for (Neuron neuron : randomNeuralNetwork.getOutputLayer().neurons) {
-            System.out.println(neuron.calculateOutput());
+        for (int i = 0; i < 100; i++) {
+            RandomNeuralNetwork rand = new RandomNeuralNetwork();
+            System.out.println(rand);
         }
     }
 }

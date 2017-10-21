@@ -78,8 +78,18 @@ public class RandomNeuralNetwork {
             outputLayerNeurons.get(i).setInputConnections(connections);
         }
 
-        //Setting the nodes in each layer with their new connections
+        //Inititializing the output of all ndoes
+        for (Neuron neuron : inputLayerNeurons) {
+            neuron.calculateOutput();
+        }
 
+        for (Neuron neuron : hiddenLayerNeurons) {
+            neuron.calculateOutput();
+        }
+
+        for (Neuron neuron : outputLayerNeurons) {
+            neuron.calculateOutput();
+        }
 
         this.inputLayer = inputLayer;
         this.hiddenLayer = hiddenLayer;

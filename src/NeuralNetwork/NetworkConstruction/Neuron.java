@@ -34,26 +34,26 @@ public class Neuron {
     public Neuron(ArrayList<NeuronsConnection> inputConnections, ArrayList<NeuronsConnection> outputConnections, double bias) {
         this.inputConnections = inputConnections;
         this.outputConnections = outputConnections;
+        this.activationFunction = new ActivationFunction();
         this.output = calculateOutput();
         this.bias = bias;
     }
 
     //Constructor for an input layer
     public Neuron(double output, double bias) {
+        this.activationFunction = new ActivationFunction();
         this.output = output;
         this.bias = bias;
     }
 
-    public Double getOutput() {
-        return output;
-    }
-
     public double calculateOutput() {
+        //NOTE - May need fixing
+        if (getInputConnections() == null) {
+            return activationFunction.calculateOutput(output, bias);
+        }
         double totalInput = weightedSumFunction.collectOutput(inputConnections);
 
-        output = activationFunction.calculateOutput(totalInput, bias);
-
-        return output;
+        return activationFunction.calculateOutput(totalInput, bias);
     }
 
     public String getId() {

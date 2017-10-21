@@ -25,7 +25,7 @@ public class NeuronsConnection {
     }
 
     public double getWeight() {
-return weight;
+        return weight;
 }
 
     public void setWeight(double weight) {
@@ -33,11 +33,11 @@ this.weight = weight;
 }
 
     public double getInput() {
-        return fromNeuron.getOutput();
+        return fromNeuron.calculateOutput();
     }
 
     public double getWeightedInput() {
-        return fromNeuron.getOutput() * weight;
+        return fromNeuron.calculateOutput() * weight;
     }
 
     public Neuron getFromNeuron() {
