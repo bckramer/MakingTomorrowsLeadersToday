@@ -3,6 +3,8 @@ package GeneticAlgorithm;
 import java.util.ArrayList;
 import java.util.Random;
 
+import geom.Rectangle;
+
 public class GeneticAlgorithm {
 	private int iteration;
 	public double mutateRate;
@@ -24,7 +26,6 @@ public class GeneticAlgorithm {
 		if(maxPop < numTopPop){
 			numTopPop = maxPop;
 		}
-
 	}
 	public void clearGeneticAlgorithm(){
 		iteration = 1;
@@ -40,15 +41,15 @@ public class GeneticAlgorithm {
 			add(temp);
 		}
 	}
-	public void createNewPopulation(newUnit offspring, int amount){
+	public void createNewPopulation(Rectangle offspring, int amount){
 		for(int i = 0; i < amount; i++){
 			newUnit temp = new newUnit(offspring);
 			temp.setIndex(i);
 			add(temp);
 		}
 	}
-	public void EvolvePop(ArrayList<newUnit> winners){
-		ArrayList<newUnit> winnerArr = winners;
+	public void EvolvePop(ArrayList<Rectangle> winners){
+		ArrayList<Rectangle> winnerArr = winners;
 		
 		if(mutateRate == 1 && winnerArr.get(0).getFitness() < 0){
 			createNewPopulation();// If the best unit from the initial population has a negative fitness 
@@ -59,7 +60,7 @@ public class GeneticAlgorithm {
 		}
 		
 		for(int i = getNumTopPop(); i < getMaxPop(); i++){
-			newUnit mom; newUnit dad; newUnit offspring;
+			Rectangle mom; Rectangle dad; Rectangle offspring;
 			Random rand = new Random();
 			if(i == getNumTopPop()){
 				 mom = winnerArr.get(0);
@@ -77,7 +78,7 @@ public class GeneticAlgorithm {
 			
 			//offspring = Gen.mutation(offspring); //TODO
 			
-			newUnit nnOffSpring =new newUnit(offspring);
+			newUnit nnOffSpring = new newUnit(offspring);
 			nnOffSpring.setIndex(i);
 			add(nnOffSpring);
 		}
@@ -85,9 +86,10 @@ public class GeneticAlgorithm {
 		setBestPopIndex(getIteration());
 		setBestFitness(winnerArr.get(0).getFitness());
 		}
-		//sortpop
+		populationArr = sortIndex(populationArr);
 		}
-	public ArrayList<newUnit> sort(ArrayList<newUnit> preSort){
+	
+	public ArrayList<newUnit> sortFitness(ArrayList<newUnit> preSort){
 		ArrayList<newUnit> postSort = preSort;
 		
 		for(int i = 0; i < postSort.size() - 1; i++){
@@ -104,14 +106,31 @@ public class GeneticAlgorithm {
 		}
 		return postSort;
 	}
+	public ArrayList<newUnit> sortIndex(ArrayList<newUnit> preSort){
+		ArrayList<newUnit> postSort = preSort;
+		
+		for(int i = 0; i < postSort.size() - 1; i++){
+			int min = i;
+			for(int x = i + 1; x < postSort.size(); x++){
+				if(postSort.get(x).getIndex() < postSort.get(min).getIndex()){
+					min = x;
+				}
+			}
+			newUnit temp = postSort.get(min);
+			postSort.set(min, postSort.get(i));
+			postSort.set(i,temp);
+			
+		}
+		return postSort;
+	}
 	
-	public newUnit crossOver(newUnit mom, newUnit dad) {
-		// TODO Auto-generated method stub
+	public Rectangle crossOver(Rectangle mom, Rectangle dad) {
+	//	Random rand = new Random(mom.)
 		return null;
 	}
 	
 	public void selection(){ //sorts by highest fitness marks top as winners and adds winners to winnersArr
-		winnerArr = sort(winnerArr);
+		winnerArr = sortFitness(winnerArr);
 		for(int i = 1; i < numTopPop; i++){ //marks top units as winner
 		populationArr.get(i).setWinner(true);
 		}
@@ -119,7 +138,7 @@ public class GeneticAlgorithm {
 			winnerArr.set(i,populationArr.get(i));
 		}
 	}
-	public void mutation(newUnit offspring){
+	public void mutation(Random offspring){
 		//for()
 	}
 	public double geneMutation(){
@@ -173,8 +192,8 @@ public class GeneticAlgorithm {
 	public int getBestFitness() {
 		return bestFitness;
 	}
-	public void setBestFitness(int bestFitness) {
-		this.bestFitness = bestFitness;
+	public void setBestFitness(long l) {
+		this.bestFitness = (int) l;
 	}
 	public int getMaxPop() {
 		return maxPop;
