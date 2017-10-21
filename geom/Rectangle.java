@@ -18,6 +18,7 @@ public class Rectangle {
 	private String name;
 	private int gen;
 	private NeuralNet net;
+	private boolean winner;
 
 	public Rectangle(float x, float y, float width, float height, float winWidth, float winHeight, Color c, String name, int gen, NeuralNet net) {
 		this.x = x;
@@ -36,6 +37,7 @@ public class Rectangle {
 		this.net = net;
 		this.winWidth = winWidth;
 		this.winHeight = winHeight;
+		winner = false;
 		
 	}
 
@@ -196,6 +198,14 @@ public class Rectangle {
 
 	public void setNet(NeuralNet net) {
 		this.net = net;
+	}
+
+	public boolean isWinner() {
+		return winner;
+	}
+
+	public void setWinner(boolean winner) {
+		this.winner = winner;
 	}
 
 }

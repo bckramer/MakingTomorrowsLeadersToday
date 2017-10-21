@@ -13,6 +13,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import GeneticAlgorithm.GeneticAlgorithm;
 import NetworkConstruction.NeuralNet;
 import NetworkConstruction.Neuron;
 import geom.Point;
@@ -29,6 +30,7 @@ public class Main extends BasicGame {
 	private ArrayList<Triangle> triangles;
 	public ArrayList<Rectangle> squares;
 	private ArrayList<Rectangle> deadSquares;
+	private ArrayList<Rectangle> winners;
 	private int maxTriangles = 100;
 	private long startTime;
 	private int generation = 0;
@@ -39,6 +41,7 @@ public class Main extends BasicGame {
 		triangles = new ArrayList<Triangle>();
 		squares = new ArrayList<Rectangle>();
 		deadSquares = new ArrayList<Rectangle>();
+		winners = new ArrayList<Rectangle>();
 		System.out.println(new Color(Color.white));
 	}
 
@@ -75,33 +78,31 @@ public class Main extends BasicGame {
 			Point py = squares.get(x).getClosestY();
 			g.drawLine(squares.get(x).getX() + squares.get(x).getWidth() / 2, squares.get(x).getY(), py.getX(),
 					py.getY());
-			Random rand = new Random();
 
 			squares.get(x).updateFitness();
-			
+
 			List<Neuron> neurons = squares.get(x).getNet().getInputLayer().getNeurons();
 			neurons.get(0).setOutput(squares.get(x).getClosestX().getX());
 			neurons.get(1).setOutput(squares.get(x).getClosestY().getY());
-			
+
 			List<Neuron> neurons2 = squares.get(x).getNet().getOutputLayer().getNeurons();
 			squares.get(x).move(neurons2.get(0).calculateOutput(), neurons2.get(1).calculateOutput());
 			if (squares.get(x).collidesWithTriangle(triangles)) {
+				if (squares.size() <= 3) {
+					winners.add(squares.get(x));
+				}
 				deadSquares.add(squares.remove(x));
 			}
 			if (squares.size() == 0) {
 				generation++;
 				triangles.clear();
-				
-				/*SpreadsheetGenerator gen = new SpreadsheetGenerator(deadSquares, fileName);
-				try {
-					gen.generate();
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
+
+				/*
+				 * SpreadsheetGenerator gen = new SpreadsheetGenerator(deadSquares, fileName);
+				 * try { gen.generate(); } catch (FileNotFoundException e) { // TODO
+				 * Auto-generated catch block e.printStackTrace(); } catch (IOException e) { //
+				 * TODO Auto-generated catch block e.printStackTrace(); }
+				 */
 				init(gc);
 			}
 		}
@@ -132,24 +133,42 @@ public class Main extends BasicGame {
 		maxTriangles = 100;
 		triangles.add(new Triangle(new Point(width / 2, 250)));
 
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta", generation, new NeuralNet()));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue, "Blue", generation, new NeuralNet()));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.green, "Green", generation, new NeuralNet()));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.yellow, "Yellow", generation, new NeuralNet()));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.cyan, "Cyan", generation, new NeuralNet()));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.orange, "Orange", generation, new NeuralNet()));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.lightGray, "Light Grey", generation, new NeuralNet()));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation, new NeuralNet()));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray, "Grey", generation, new NeuralNet()));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation, new NeuralNet()));
-		for (int i = 0; i <  990; i++) {
-			Random rand = new Random();
-			Color randColor = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, randColor, null, generation, new NeuralNet()));
+		if (generation == 0) {
+			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta",
+					generation, new NeuralNet()));
+			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue, "Blue", generation,
+					new NeuralNet()));
+			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.green, "Green", generation,
+					new NeuralNet()));
+			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.yellow, "Yellow", generation,
+					new NeuralNet()));
+			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.cyan, "Cyan", generation,
+					new NeuralNet()));
+			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.orange, "Orange", generation,
+					new NeuralNet()));
+			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.lightGray, "Light Grey",
+					generation, new NeuralNet()));
+			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation,
+					new NeuralNet()));
+			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray, "Grey", generation,
+					new NeuralNet()));
+			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation,
+					new NeuralNet()));
+			/*
+			 * for (int i = 0; i < 0; i++) { Random rand = new Random(); Color randColor =
+			 * new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+			 * squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height,
+			 * randColor, null, generation, new NeuralNet())); }
+			 */
+		} else {
+			GeneticAlgorithm ga = new GeneticAlgorithm(10, 4);
+			ga.createNewPopulation();
+			ga.EvolvePop(winners);
 		}
-		/*for (int i = 0; i < squares.size(); i++) {
-			System.out.println(squares.get(i).getNet());
-		}*/
+		/*
+		 * for (int i = 0; i < squares.size(); i++) {
+		 * System.out.println(squares.get(i).getNet()); }
+		 */
 	}
 
 	@Override
