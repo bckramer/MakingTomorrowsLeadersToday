@@ -5,10 +5,18 @@ import java.util.Random;
 
 public class RandomNeuralNetwork {
 
+<<<<<<< HEAD
     private NeuralNetLayer inputNetLayer;
     private NeuralNetLayer hiddenNetLayer;
     private NeuralNetLayer outputNetLayer;
 
+=======
+    private NeuralNetLayer inputLayer;
+
+    private NeuralNetLayer hiddenLayer;
+
+    private NeuralNetLayer outputLayer;
+>>>>>>> d652c404cbd00ad707319ee32699fc894781dbfa
 
     public RandomNeuralNetwork () {
         //Input Layer
@@ -70,6 +78,7 @@ public class RandomNeuralNetwork {
             neuron.setInputConnections(hiddenToOutput);
         }
 
+<<<<<<< HEAD
         this.inputNetLayer = inputLayer;
         this.hiddenNetLayer = hiddenLayer;
         this.outputNetLayer = outputLayer;
@@ -81,14 +90,49 @@ public class RandomNeuralNetwork {
 
     public void setInputNetLayer(NeuralNetLayer inputNetLayer) {
         this.inputNetLayer = inputNetLayer;
+=======
+        this.inputLayer = inputLayer;
+        this.hiddenLayer = hiddenLayer;
+        this.outputLayer = outputLayer;
+    }
+
+    public NeuralNetLayer getInputLayer() {
+        return inputLayer;
+    }
+
+    public void setInputLayer(NeuralNetLayer inputLayer) {
+        this.inputLayer = inputLayer;
+    }
+
+    public NeuralNetLayer getHiddenLayer() {
+        return hiddenLayer;
+    }
+
+    public void setHiddenLayer(NeuralNetLayer hiddenLayer) {
+        this.hiddenLayer = hiddenLayer;
+    }
+
+    public NeuralNetLayer getOutputLayer() {
+        return outputLayer;
+    }
+
+    public void setOutputLayer(NeuralNetLayer outputLayer) {
+        this.outputLayer = outputLayer;
+>>>>>>> d652c404cbd00ad707319ee32699fc894781dbfa
     }
 
     @Override
     public String toString() {
         return "RandomNeuralNetwork{" +
+<<<<<<< HEAD
                 "inputNetLayer=" + inputNetLayer +
                 ", hiddenNetLayer=" + hiddenNetLayer +
                 ", outputNetLayer=" + outputNetLayer +
+=======
+                "inputLayer=" + inputLayer +
+                ", hiddenLayer=" + hiddenLayer +
+                ", outputLayer=" + outputLayer +
+>>>>>>> d652c404cbd00ad707319ee32699fc894781dbfa
                 '}';
     }
 }
