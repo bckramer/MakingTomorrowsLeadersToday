@@ -2,7 +2,7 @@ package geom;
 
 public class Point {
 
-	public float x, y;
+	private float x, y;
 	
 	public float getX() {
 		return x;
@@ -27,6 +27,14 @@ public class Point {
 	public Point(float x, float y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void modifyY(float yDiff) {
+		y+=yDiff;
+	}
+	
+	public void modifyX(float xDiff) {
+		x+=xDiff;
 	}
 	
 }
