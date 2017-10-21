@@ -116,7 +116,7 @@ public class NeuralNet {
         return allNeurons;
     }
 
-    public ArrayList<NeuronsConnection> getAllConections() {
+    public ArrayList<NeuronsConnection> getAllConnections() {
         ArrayList<NeuronsConnection> connections = new ArrayList<>();
         for (Neuron neuron : hiddenLayer.getNeurons()) {
             connections.addAll(neuron.getInputConnections());
