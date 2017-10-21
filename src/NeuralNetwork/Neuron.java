@@ -9,9 +9,9 @@ public class Neuron {
     protected List<NeuronsConnection> inputConnections;
     //Connections stemming out from the neuron
     protected List<NeuronsConnection> outputConnections;
-    //
-    protected InputSummingFunction inputSummingFunction;
-    //
+    //Allows us to sum al the input connections
+    protected WeightedSumFunction inputSummingFunction;
+    //Allows us to get an output for the neuron
     protected ActivationFunction activationFunction;
 
     public Neuron() {
@@ -22,6 +22,7 @@ public class Neuron {
     public double calculateOutput() {
         double totalInput = inputSummingFunction.collectOutput(inputConnections);
 
-        return activationFunction.getOutput(totalInput);
+
+        return activationFunction.calculateOutput(totalInput);
     }
 }

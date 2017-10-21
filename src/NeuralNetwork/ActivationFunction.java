@@ -1,7 +1,12 @@
 /**
  * Neural networks activation function interface.
  */
-public interface ActivationFunction {
+public class ActivationFunction {
+
+
+    public ActivationFunction() {
+
+    }
     /**
     * Performs calculation based on the sum of input neurons output.
     *
@@ -11,5 +16,8 @@ public interface ActivationFunction {
     *
     * @return Output's calculation based on the sum of inputs
     */
-    double calculateOutput(double summedInput);
+    public double calculateOutput(double summedInput) {
+        double sigmoid = 1/(1 + Math.exp(-summedInput));
+        return sigmoid;
+    }
 }
