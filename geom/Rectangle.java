@@ -3,7 +3,6 @@ package geom;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 
 public class Rectangle {
 
@@ -11,17 +10,29 @@ public class Rectangle {
 	private float width, height;
 	private float winWidth, winHeight;
 	private Color c;
-
 	private Point closestX, closestY;
+	private long fitness;
+	private long startingTime;
+	private String name;
+	private int gen;
 
-	public Rectangle(float x, float y, float width, float height, float winWidth, float winHeight, Color c) {
+	public Rectangle(float x, float y, float width, float height, float winWidth, float winHeight, Color c, String name, int gen) {
 		this.x = x;
 		this.y = y;
 		this.c = c;
 		this.width = width;
 		this.height = height;
+		startingTime = System.currentTimeMillis();
+		fitness = 0;
+		if (name == null) {
+			name = "Untitled";
+		}else {
+			this.name = name;
+		}
+		this.gen = gen;
 	}
 
+	//I'm so sorry
 	public boolean collidesWithTriangle(ArrayList<Triangle> tris) {
 		org.newdawn.slick.geom.Rectangle rec = new org.newdawn.slick.geom.Rectangle(x, y, width, height);
 		for (int x = 0; x < tris.size(); x++) {
@@ -34,6 +45,10 @@ public class Rectangle {
 			}
 		}
 		return false;
+	}
+	
+	public void updateFitness() {
+		fitness = System.currentTimeMillis() - startingTime;
 	}
 
 	public float getWidth() {
@@ -148,6 +163,22 @@ public class Rectangle {
 
 	public Point getClosestY() {
 		return closestY;
+	}
+
+	public long getFitness() {
+		return fitness;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public int getGen() {
+		return gen;
 	}
 
 }
