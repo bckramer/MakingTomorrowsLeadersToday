@@ -3,19 +3,23 @@ package GeneticAlgorithm;
 import java.util.ArrayList;
 import java.util.Random;
 
+import NetworkConstruction.NeuralNet;
 import geom.Rectangle;
 
 public class GeneticAlgorithm {
 	private int iteration;
 	public double mutateRate;
 	private int bestPopIndex;
-	private ArrayList<newUnit> populationArr;
+	private ArrayList<Rectangle> squares;
 	public int maxPop;
 	public int numTopPop;
 	private int scaleFactor = 200;
 	private int bestIndex;
 	public int bestFitness;
-	ArrayList<newUnit> winnerArr;
+	public double gene;
+	ArrayList<Rectangle> winnerArr;
+	private float width;
+	private float height;
 
 
 	public GeneticAlgorithm(int maxUnits,int topPerformingUnits){
@@ -33,16 +37,39 @@ public class GeneticAlgorithm {
 		bestPopIndex = -1;
 		bestFitness = -1;
 	}
-	public void createNewPopulation(){
-		for(int i = 0; i < maxPop; i++){
-			newUnit temp = new newUnit(2,8,2);
-			temp.setIndex(i);
-			add(temp);
-		}
+	public ArrayList<Rectangle> createNewPopulation(float width, float height, int generation){
+		width = this.width;
+		height = this.height;
+		ArrayList <Rectangle> squares;
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta",
+				generation, new NeuralNet()));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue, "Blue", generation,
+				new NeuralNet()));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.green, "Green", generation,
+				new NeuralNet()));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.yellow, "Yellow", generation,
+				new NeuralNet()));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.cyan, "Cyan", generation,
+				new NeuralNet()));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.orange, "Orange", generation,
+				new NeuralNet()));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.lightGray, "Light Grey",
+				generation, new NeuralNet()));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation,
+				new NeuralNet()));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray, "Grey", generation,
+				new NeuralNet()));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation,
+				new NeuralNet()));
+		return squares;
 	}
+public ArrayList<Rectangle> createNewPopulation(Rectangle offspring){
+		
+		return squares;
+}
 	public void createNewPopulation(Rectangle offspring, int amount){
 		for(int i = 0; i < amount; i++){
-			newUnit temp = new newUnit(offspring);
+			Rectangle temp = new Rectangle(offspring);
 			temp.setIndex(i);
 			add(temp);
 		}
@@ -51,8 +78,7 @@ public class GeneticAlgorithm {
 		ArrayList<Rectangle> winnerArr = winners;
 		
 		if(mutateRate == 1 && winnerArr.get(0).getFitness() < 0){
-			createNewPopulation();// If the best unit from the initial population has a negative fitness 
-								  // no  bird reached the first barrier
+			createNewPopulation(width, height, bestFitness);// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
 		else{
 			setMutateRate(.2);
@@ -75,21 +101,20 @@ public class GeneticAlgorithm {
 				 offspring = winnerArr.get(rand.nextInt());
 			}
 			
-			//offspring = Gen.mutation(offspring); //TODO
+			mutation(offspring);
 			
-			newUnit nnOffSpring = new newUnit(offspring);
-			nnOffSpring.setIndex(i);
-			add(nnOffSpring);
+			offspring.setIndex(i);
+			add(offspring);
 		}
 		if(winnerArr.get(0).getFitness() > getBestFitness()){
 		setBestPopIndex(getIteration());
 		setBestFitness(winnerArr.get(0).getFitness());
 		}
-		populationArr = sortIndex(populationArr);
+		squares = sortIndex(squares);
 		}
 	
-	public ArrayList<newUnit> sortFitness(ArrayList<newUnit> preSort){
-		ArrayList<newUnit> postSort = preSort;
+	public ArrayList<Rectangle> sortFitness(ArrayList<Rectangle> preSort){
+		ArrayList<Rectangle> postSort = preSort;
 		
 		for(int i = 0; i < postSort.size() - 1; i++){
 			int min = i;
@@ -98,15 +123,15 @@ public class GeneticAlgorithm {
 					min = x;
 				}
 			}
-			newUnit temp = postSort.get(min);
+			Rectangle temp = postSort.get(min);
 			postSort.set(min, postSort.get(i));
 			postSort.set(i,temp);
 			
 		}
 		return postSort;
 	}
-	public ArrayList<newUnit> sortIndex(ArrayList<newUnit> preSort){
-		ArrayList<newUnit> postSort = preSort;
+	public ArrayList<Rectangle> sortIndex(ArrayList<Rectangle> squares2){
+		ArrayList<Rectangle> postSort = squares2;
 		
 		for(int i = 0; i < postSort.size() - 1; i++){
 			int min = i;
@@ -115,7 +140,7 @@ public class GeneticAlgorithm {
 					min = x;
 				}
 			}
-			newUnit temp = postSort.get(min);
+			Rectangle temp = postSort.get(min);
 			postSort.set(min, postSort.get(i));
 			postSort.set(i,temp);
 			
@@ -138,10 +163,10 @@ public class GeneticAlgorithm {
 	public void selection(){ //sorts by highest fitness marks top as winners and adds winners to winnersArr
 		winnerArr = sortFitness(winnerArr);
 		for(int i = 1; i < numTopPop; i++){ //marks top units as winner
-		populationArr.get(i).setWinner(true);
+			squares.get(i).setWinner(true);
 		}
 		for(int i = 0; i < numTopPop; i++){
-			winnerArr.set(i,populationArr.get(i));
+			winnerArr.set(i,squares.get(i));
 		}
 	}
 	public void mutation(Rectangle offspring){
@@ -180,14 +205,14 @@ public class GeneticAlgorithm {
 	public void setBestPopIndex(int bestPopIndex) {
 		this.bestPopIndex = bestPopIndex;
 	}
-	public ArrayList<newUnit> getPopulationArr() {
-		return populationArr;
+	public ArrayList<Rectangle> getSquares() {
+		return squares;
 	}
-	public void setPopulationArr(ArrayList<newUnit> populationArr) {
-		this.populationArr = populationArr;
+	public void setPopulationArr(ArrayList<Rectangle> squares) {
+		this.squares = squares;
 	}
-	public void add(newUnit unit){
-		populationArr.add(unit);
+	public void add(Rectangle square){
+		squares.add(square);
 	}
 	public int getScaleFactor() {
 		return scaleFactor;
