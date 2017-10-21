@@ -15,7 +15,6 @@ public class GeneticAlgorithm {
 	private int scaleFactor = 200;
 	private int bestIndex;
 	public int bestFitness;
-	public double gene;
 	ArrayList<newUnit> winnerArr;
 
 
@@ -147,14 +146,14 @@ public class GeneticAlgorithm {
 	}
 	public void mutation(Rectangle offspring){
 		for (int i = 0; i < offspring.getNet().getAllNeurons().size(); i++) {
-			offspring.getNet().getAllNeurons().get(i).setBias(geneMutation(offspring.getNet().getAllNeurons().get(i).getBias());
+			offspring.getNet().getAllNeurons().get(i).setBias(geneMutation(offspring.getNet().getAllNeurons().get(i).getBias()));
 		}
 		
 		for (int i = 0; i < offspring.getNet().getAllConnections().size(); i++) {
 			offspring.getNet().getAllConnections().get(i).setWeight(geneMutation(offspring.getNet().getAllConnections().get(i).getWeight()));
 		}
 	}
-	public double geneMutation(){
+	public double geneMutation(double gene){
 		Random rand = new Random();
 		if(rand.nextDouble() < mutateRate){
 			double mutateFactor = 1 +((rand.nextDouble() - .5) * 3 + (rand.nextDouble() - .5));
