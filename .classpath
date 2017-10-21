@@ -3,5 +3,11 @@
 	<classpathentry excluding="src/NeuralNetwork/" kind="src" path=""/>
 	<classpathentry kind="src" path="src/NeuralNetwork"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/Brian/Documents/Java APIs/lwjgl-2.9.3/jar/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/Brian/Documents/Java APIs/lwjgl-2.9.3/native/solaris/windows"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Brian/Documents/Java APIs/lib/slick.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
