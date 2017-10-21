@@ -40,6 +40,26 @@ public class Rectangle {
 		winner = false;
 		
 	}
+	
+	public Rectangle(Rectangle r) {
+		this.x = r.getX();
+		this.y = r.getY();
+		this.c = r.getC();
+		this.width = r.getWidth();
+		this.height = r.getHeight();
+		startingTime = System.currentTimeMillis();
+		fitness = 0;
+		this.name = r.getName();
+		this.gen = r.getGen();
+		this.net = r.getNet();
+		this.winWidth = r.getWinWidth();
+		this.winHeight = r.getWinHeight();
+		winner = r.getWinner();
+	}
+
+	public boolean getWinner() {
+		return winner;
+	}
 
 	//I'm so sorry
 	public boolean collidesWithTriangle(ArrayList<Triangle> tris) {
