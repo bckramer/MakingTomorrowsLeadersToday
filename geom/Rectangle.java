@@ -233,4 +233,14 @@ public class Rectangle {
 		
 	}
 
+<<<<<<< HEAD
+	public void setFitness(long fitness) {
+		this.fitness = fitness;
+=======
+	public int getIndex() {
+		// TODO Auto-generated method stub
+		return 0;
+>>>>>>> d5ab69721c043348fd7e6203e904e91ea2a64769
+	}
+
 }

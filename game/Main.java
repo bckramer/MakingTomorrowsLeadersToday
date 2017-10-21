@@ -165,6 +165,7 @@ public class Main extends BasicGame {
 			ga.createNewPopulation();
 			ga.EvolvePop(winners);
 		}
+		winners.clear();
 		/*
 		 * for (int i = 0; i < squares.size(); i++) {
 		 * System.out.println(squares.get(i).getNet()); }
