@@ -31,6 +31,8 @@ public class NeuralNetLayer {
         return neurons.get(neuronPos);
     }
 
+<<<<<<< HEAD
+=======
     public String getId() {
         return id;
     }
@@ -39,6 +41,7 @@ public class NeuralNetLayer {
         this.id = id;
     }
 
+>>>>>>> d652c404cbd00ad707319ee32699fc894781dbfa
     @Override
     public String toString() {
         return "NeuralNetLayer{" +
