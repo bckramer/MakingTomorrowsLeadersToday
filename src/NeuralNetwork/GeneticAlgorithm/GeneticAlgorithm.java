@@ -3,11 +3,12 @@ package GeneticAlgorithm;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.newdawn.slick.Color;
+
 import NetworkConstruction.NeuralNet;
 import geom.Rectangle;
 
 public class GeneticAlgorithm {
-	private int iteration;
 	public double mutateRate;
 	private int bestPopIndex;
 	private ArrayList<Rectangle> squares;
@@ -31,7 +32,6 @@ public class GeneticAlgorithm {
 		}
 	}
 	public void clearGeneticAlgorithm(){
-		iteration = 1;
 		mutateRate = 1;
 
 		bestPopIndex = -1;
@@ -40,7 +40,7 @@ public class GeneticAlgorithm {
 	public ArrayList<Rectangle> createNewPopulation(float width, float height, int generation){
 		width = this.width;
 		height = this.height;
-		ArrayList <Rectangle> squares;
+		ArrayList <Rectangle> squares = new ArrayList<Rectangle>();
 		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta",
 				generation, new NeuralNet()));
 		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue, "Blue", generation,
@@ -63,16 +63,9 @@ public class GeneticAlgorithm {
 				new NeuralNet()));
 		return squares;
 	}
-public ArrayList<Rectangle> createNewPopulation(Rectangle offspring){
+	public ArrayList<Rectangle> createNewPopulation(Rectangle offspring){
 		
 		return squares;
-}
-	public void createNewPopulation(Rectangle offspring, int amount){
-		for(int i = 0; i < amount; i++){
-			Rectangle temp = new Rectangle(offspring);
-			temp.setIndex(i);
-			add(temp);
-		}
 	}
 	public void EvolvePop(ArrayList<Rectangle> winners){
 		ArrayList<Rectangle> winnerArr = winners;
@@ -104,10 +97,11 @@ public ArrayList<Rectangle> createNewPopulation(Rectangle offspring){
 			mutation(offspring);
 			
 			offspring.setIndex(i);
+			offspring.setFitness(0);
 			add(offspring);
 		}
 		if(winnerArr.get(0).getFitness() > getBestFitness()){
-		setBestPopIndex(getIteration());
+		setBestPopIndex(winnerArr.get(0).getGen());
 		setBestFitness(winnerArr.get(0).getFitness());
 		}
 		squares = sortIndex(squares);
@@ -185,13 +179,6 @@ public ArrayList<Rectangle> createNewPopulation(Rectangle offspring){
 			 gene = gene * mutateFactor;
 		}
 		return gene;
-	}
-	
-	public int getIteration() {
-		return iteration;
-	}
-	public void setIteration(int iteration) {
-		this.iteration = iteration;
 	}
 	public double getMutateRate() {
 		return mutateRate;
