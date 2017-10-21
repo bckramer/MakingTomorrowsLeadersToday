@@ -16,11 +16,12 @@ public class GeneticAlgorithm {
 	public int numTopPop;
 	private int scaleFactor = 200;
 	private int bestIndex;
-	public int bestFitness;
+	public float bestFitness;
 	public double gene;
 	ArrayList<Rectangle> winnerArr;
 	private float width;
 	private float height;
+	private int generation;
 
 
 	public GeneticAlgorithm(int maxUnits,int topPerformingUnits){
@@ -40,6 +41,7 @@ public class GeneticAlgorithm {
 	public ArrayList<Rectangle> createNewPopulation(float width, float height, int generation){
 		width = this.width;
 		height = this.height;
+		generation = this.generation;
 		ArrayList <Rectangle> squares = new ArrayList<Rectangle>();
 		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta",
 				generation, new NeuralNet()));
@@ -71,7 +73,7 @@ public class GeneticAlgorithm {
 		ArrayList<Rectangle> winnerArr = winners;
 		
 		if(mutateRate == 1 && winnerArr.get(0).getFitness() < 0){
-			createNewPopulation(width, height, bestFitness);// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
+			createNewPopulation(width, height, generation + 1);// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
 		else{
 			setMutateRate(.2);
@@ -97,7 +99,6 @@ public class GeneticAlgorithm {
 			mutation(offspring);
 			
 			offspring.setIndex(i);
-			offspring.setFitness(0);
 			add(offspring);
 		}
 		if(winnerArr.get(0).getFitness() > getBestFitness()){
@@ -213,7 +214,7 @@ public class GeneticAlgorithm {
 	public void setBestIndex(int bestIndex) {
 		this.bestIndex = bestIndex;
 	}
-	public int getBestFitness() {
+	public float getBestFitness() {
 		return bestFitness;
 	}
 	public void setBestFitness(long l) {
