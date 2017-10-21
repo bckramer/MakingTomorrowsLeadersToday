@@ -1,3 +1,5 @@
+package NetworkConstruction;
+
 import java.util.Random;
 
 public class NeuronsConnection {
