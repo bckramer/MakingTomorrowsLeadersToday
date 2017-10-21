@@ -90,6 +90,7 @@ public class Main extends BasicGame {
 			if (squares.get(x).collidesWithTriangle(triangles)) {
 				if (squares.size() <= 3) {
 					winners.add(squares.get(x));
+					winners.get(x).setIndex(winners.size());
 				}
 				deadSquares.add(squares.remove(x));
 			}
@@ -132,28 +133,27 @@ public class Main extends BasicGame {
 		startTime = System.currentTimeMillis();
 		maxTriangles = 100;
 		triangles.add(new Triangle(new Point(width / 2, 250)));
-
 		if (generation == 0) {
 			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta",
-					generation, new NeuralNet()));
+					generation, new NeuralNet(), 0));
 			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue, "Blue", generation,
-					new NeuralNet()));
+					new NeuralNet(), 1));
 			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.green, "Green", generation,
-					new NeuralNet()));
+					new NeuralNet(), 2));
 			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.yellow, "Yellow", generation,
-					new NeuralNet()));
+					new NeuralNet(), 3));
 			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.cyan, "Cyan", generation,
-					new NeuralNet()));
+					new NeuralNet(), 4));
 			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.orange, "Orange", generation,
-					new NeuralNet()));
+					new NeuralNet(), 5));
 			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.lightGray, "Light Grey",
-					generation, new NeuralNet()));
+					generation, new NeuralNet(), 6));
 			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation,
-					new NeuralNet()));
+					new NeuralNet(), 7));
 			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray, "Grey", generation,
-					new NeuralNet()));
+					new NeuralNet(), 8));
 			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation,
-					new NeuralNet()));
+					new NeuralNet(), 9));
 			/*
 			 * for (int i = 0; i < 0; i++) { Random rand = new Random(); Color randColor =
 			 * new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
@@ -162,7 +162,7 @@ public class Main extends BasicGame {
 			 */
 		} else {
 			GeneticAlgorithm ga = new GeneticAlgorithm(10, 4);
-			ga.createNewPopulation();
+			//ga.createNewPopulation();
 			ga.EvolvePop(winners);
 		}
 		winners.clear();
