@@ -1,5 +1,7 @@
 package game;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,26 +15,34 @@ import org.newdawn.slick.SlickException;
 import geom.Point;
 import geom.Rectangle;
 import geom.Triangle;
+import util.SpreadsheetGenerator;
 
 public class Main extends BasicGame {
 
 	private static int width = 800;
+	private static int absWidth = 950;
 	private static int height = 800;
 	private static AppGameContainer app;
 	private ArrayList<Triangle> triangles;
 	public ArrayList<Rectangle> squares;
+	private ArrayList<Rectangle> deadSquares;
 	private int maxTriangles = 100;
 	private long startTime;
 	private int generation = 0;
+	private String fileName = System.getProperty("user.home") + "\\desktop\\recs";
 
 	public Main(String title) {
 		super(title);
 		triangles = new ArrayList<Triangle>();
 		squares = new ArrayList<Rectangle>();
+		deadSquares = new ArrayList<Rectangle>();
+		System.out.println(new Color(Color.white));
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException {
+		g.setColor(Color.green);
+		g.fillRect(800, 0, 150, height);
 		g.setColor(Color.white);
 		g.drawString("Triangle Chance: 1/" + maxTriangles + " # Triangles: " + triangles.size() + " # Squares: "
 				+ squares.size() + " FPS: " + app.getFPS() + " Time(s): "
@@ -67,13 +77,25 @@ public class Main extends BasicGame {
 			Random rand = new Random();
 			rand.setSeed(System.nanoTime());
 
+			squares.get(x).updateFitness();
 			squares.get(x).move(rand.nextBoolean());
 			if (squares.get(x).collidesWithTriangle(triangles)) {
-				squares.remove(x);
+				deadSquares.add(squares.remove(x));
 			}
 			if (squares.size() == 0) {
 				generation++;
 				triangles.clear();
+				
+				/*SpreadsheetGenerator gen = new SpreadsheetGenerator(deadSquares, fileName);
+				try {
+					gen.generate();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
 				init(gc);
 			}
 		}
@@ -104,20 +126,20 @@ public class Main extends BasicGame {
 		maxTriangles = 100;
 		triangles.add(new Triangle(new Point(width / 2, 250)));
 
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.green));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.yellow));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.cyan));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.orange));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.lightGray));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white));
-		for (int i = 0; i < 990; i++) {
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta", generation));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue, "Blue", generation));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.green, "Green", generation));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.yellow, "Yellow", generation));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.cyan, "Cyan", generation));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.orange, "Orange", generation));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.lightGray, "Light Grey", generation));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray, "Grey", generation));
+		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation));
+		for (int i = 0; i <  0; i++) {
 			Random rand = new Random();
 			Color randColor = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, randColor));
+			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, randColor, null, generation));
 		}
 
 	}
@@ -136,7 +158,7 @@ public class Main extends BasicGame {
 
 	public static void main(String[] args) throws SlickException {
 		app = new AppGameContainer(new Main("Making the Leaders of Tomorrow Today"));
-		app.setDisplayMode(width, height, false);
+		app.setDisplayMode(absWidth, height, false);
 		app.setFullscreen(false);
 		app.setTargetFrameRate(144);
 		app.setShowFPS(true);
