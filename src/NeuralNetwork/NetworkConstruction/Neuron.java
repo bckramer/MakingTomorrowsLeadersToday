@@ -2,6 +2,7 @@ package NetworkConstruction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Neuron {
 
@@ -12,7 +13,7 @@ public class Neuron {
     //Connections stemming out from the neuron
     private List<NeuronsConnection> outputConnections;
     //Allows us to sum al the input connections
-    private WeightedSumFunction inputSummingFunction;
+    private WeightedSumFunction weightedSumFunction;
     //Allows us to get an output for the neuron
     private ActivationFunction activationFunction;
     //Calculated output for the neuron
@@ -24,6 +25,10 @@ public class Neuron {
     public Neuron() {
         this.inputConnections = new ArrayList<>();
         this.outputConnections = new ArrayList<>();
+        this.weightedSumFunction = new WeightedSumFunction();
+        this.activationFunction = new ActivationFunction();
+        Random rand = new Random();
+        this.bias = rand.nextDouble() * 2 - 1;
     }
 
     public Neuron(ArrayList<NeuronsConnection> inputConnections, ArrayList<NeuronsConnection> outputConnections, double bias) {
@@ -44,7 +49,7 @@ public class Neuron {
     }
 
     public double calculateOutput() {
-        double totalInput = inputSummingFunction.collectOutput(inputConnections);
+        double totalInput = weightedSumFunction.collectOutput(inputConnections);
 
         output = activationFunction.calculateOutput(totalInput, bias);
 
@@ -76,11 +81,11 @@ public class Neuron {
     }
 
     public WeightedSumFunction getInputSummingFunction() {
-        return inputSummingFunction;
+        return weightedSumFunction;
     }
 
     public void setInputSummingFunction(WeightedSumFunction inputSummingFunction) {
-        this.inputSummingFunction = inputSummingFunction;
+        this.weightedSumFunction = inputSummingFunction;
     }
 
     public ActivationFunction getActivationFunction() {
@@ -107,10 +112,7 @@ public class Neuron {
     public String toString() {
         return "Neuron{" +
                 "id='" + id + '\'' +
-                ", inputConnections=" + inputConnections +
-                ", outputConnections=" + outputConnections +
-                ", inputSummingFunction=" + inputSummingFunction +
-                ", activationFunction=" + activationFunction +
+                "outputConnection" + outputConnections +
                 ", output=" + output +
                 ", bias=" + bias +
                 '}';

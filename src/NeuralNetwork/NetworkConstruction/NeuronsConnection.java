@@ -14,8 +14,8 @@ public class NeuronsConnection {
         this.fromNeuron = fromNeuron;
         this.toNeuron = toNeuron;
         Random rand = new Random();
-        double randNum = rand.nextDouble() * 10.0;
-        this.weight = Math.random();
+        double randNum = rand.nextDouble() * 2 - 1;
+        this.weight = randNum;
     }
 
     public NeuronsConnection(Neuron fromNeuron, Neuron toNeuron, double weight) {
@@ -51,8 +51,8 @@ return toNeuron;
     @Override
     public String toString() {
         return "NeuronsConnection{" +
-                "fromNeuron=" + fromNeuron +
-                ", toNeuron=" + toNeuron +
+//                "fromNeuron=" + fromNeuron +
+//                ", toNeuron=" + toNeuron +
                 ", weight=" + weight +
                 '}';
     }

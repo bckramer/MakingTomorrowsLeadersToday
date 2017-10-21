@@ -1,5 +1,6 @@
 package NetworkConstruction;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -14,12 +15,13 @@ public class RandomNeuralNetwork {
     public RandomNeuralNetwork () {
         //Input Layer
         Random rand = new Random();
-        double output = rand.nextDouble() * 10.0;
-        double bias = rand.nextDouble() * 10.0;
+        double output = rand.nextDouble() * 2 - 1;
+        double bias = rand.nextDouble() * 2 - 1;
         Neuron neuronIA = new Neuron(output, bias);
-        output = rand.nextDouble() * 10.0;
-        bias = rand.nextDouble() * 10.0;
-        Neuron neuronIB = new Neuron(output, bias);
+        Random rand2 = new Random();
+        double output1 = rand2.nextDouble() * 2 - 1;
+        double bias1 = rand2.nextDouble() * 2 - 1;
+        Neuron neuronIB = new Neuron(output1, bias1);
         ArrayList<Neuron> inputLayerNeurons = new ArrayList<>();
         inputLayerNeurons.add(neuronIA);
         inputLayerNeurons.add(neuronIB);
@@ -42,34 +44,42 @@ public class RandomNeuralNetwork {
         NeuralNetLayer outputLayer = new NeuralNetLayer("outputLayerRandom", outputLayerNeurons);
 
         //Connections from Input Layer to Hidden Layer
-        ArrayList<NeuronsConnection> inputToHidden = new ArrayList<>();
         for (int i = 0; i < inputLayerNeurons.size(); i++) {
+            ArrayList<NeuronsConnection> inputToHidden = new ArrayList<>();
             for (int j = 0; j < hiddenLayerNeurons.size(); j++) {
                 NeuronsConnection neuronsConnection = new NeuronsConnection(inputLayerNeurons.get(i), hiddenLayerNeurons.get(j));
                 inputToHidden.add(neuronsConnection);
             }
+            inputLayerNeurons.get(i).setOutputConnections(inputToHidden);
         }
 
-        //Connections from Hidden Layer to Output Layer
-        ArrayList<NeuronsConnection> hiddenToOutput = new ArrayList<>();
         for (int i = 0; i < hiddenLayerNeurons.size(); i++) {
+            ArrayList<NeuronsConnection> connections = new ArrayList<>();
+            for (int j = 0; j < inputLayerNeurons.size(); j++) {
+                connections.add(inputLayerNeurons.get(j).getOutputConnections().get(i));
+            }
+            hiddenLayerNeurons.get(i).setInputConnections(connections);
+        }
+
+        for (int i = 0; i < hiddenLayerNeurons.size(); i++) {
+            ArrayList<NeuronsConnection> hiddenToOutput = new ArrayList<>();
             for (int j = 0; j < outputLayerNeurons.size(); j++) {
                 NeuronsConnection neuronsConnection = new NeuronsConnection(hiddenLayerNeurons.get(i), outputLayerNeurons.get(j));
-                inputToHidden.add(neuronsConnection);
+                hiddenToOutput.add(neuronsConnection);
             }
+            hiddenLayerNeurons.get(i).setOutputConnections(hiddenToOutput);
+        }
+
+        for (int i = 0; i < outputLayerNeurons.size(); i++) {
+            ArrayList<NeuronsConnection> connections = new ArrayList<>();
+            for (int j = 0; j < hiddenLayerNeurons.size(); j++) {
+                connections.add(hiddenLayerNeurons.get(j).getOutputConnections().get(i));
+            }
+            outputLayerNeurons.get(i).setInputConnections(connections);
         }
 
         //Setting the nodes in each layer with their new connections
-        for (Neuron neuron : inputLayerNeurons) {
-            neuron.setOutputConnections(inputToHidden);
-        }
-        for (Neuron neuron : hiddenLayerNeurons) {
-            neuron.setInputConnections(inputToHidden);
-            neuron.setOutputConnections(hiddenToOutput);
-        }
-        for (Neuron neuron : outputLayerNeurons) {
-            neuron.setInputConnections(hiddenToOutput);
-        }
+
 
         this.inputLayer = inputLayer;
         this.hiddenLayer = hiddenLayer;

@@ -12,25 +12,25 @@ public class GeneticAlgorithm {
 	private int scaleFactor = 200;
 	private int bestIndex;
 	private int bestFitness;
-	
+
 
 	public GeneticAlgorithm(int maxUnits,int topPerformingUnits){
 		maxPop = maxUnits;
 		numTopPop = topPerformingUnits;
-		
+
 		if(maxPop < numTopPop){
 			numTopPop = maxPop;
 		}
-		
+
 	}
 	public void clearGeneticAlgorithm(){
 		iteration = 1;
 		mutateRate = 1;
-		
+
 		bestPopIndex = -1;
 		bestFitness = -1;
 	}
-	
+
 	public int getIteration() {
 		return iteration;
 	}
@@ -85,6 +85,6 @@ public class GeneticAlgorithm {
 	public void setNumTopPop(int numTopPop) {
 		this.numTopPop = numTopPop;
 	}
-	
-	
+
+
 }

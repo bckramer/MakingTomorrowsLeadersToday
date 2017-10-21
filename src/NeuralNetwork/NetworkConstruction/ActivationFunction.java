@@ -8,7 +8,8 @@ public class ActivationFunction {
     }
 
     public double calculateOutput(double summedInput, double bias) {
-        Double sigmoid = 1/(1 + Math.exp(-(summedInput - bias)));
+        double euler = Math.exp(-(summedInput - bias));
+        double sigmoid = 1/(1 + euler);
         return sigmoid;
     }
 }
