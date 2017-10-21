@@ -1,17 +1,18 @@
 package GeneticAlgorithm;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GeneticAlgorithm {
 	private int iteration;
-	private double mutateRate;
+	public double mutateRate;
 	private int bestPopIndex;
-	private ArrayList<Population> populationArr;
+	private ArrayList<newUnit> populationArr;
 	public int maxPop;
 	public int numTopPop;
 	private int scaleFactor = 200;
 	private int bestIndex;
-	private int bestFitness;
+	public int bestFitness;
 	
 
 	public GeneticAlgorithm(int maxUnits,int topPerformingUnits){
@@ -30,6 +31,60 @@ public class GeneticAlgorithm {
 		bestPopIndex = -1;
 		bestFitness = -1;
 	}
+	public void createNewPopulation(){
+		for(int i = 0; i < maxPop; i++){
+			newUnit temp = new newUnit(2,8,2);
+			temp.setIndex(i);
+			add(temp);
+		}
+	}
+	public void createNewPopulation(newUnit offspring, int amount){
+		for(int i = 0; i < amount; i++){
+			newUnit temp = new newUnit(offspring);
+			temp.setIndex(i);
+			add(temp);
+		}
+	}
+	public void EvolvePop(ArrayList<newUnit> winners){
+		ArrayList<newUnit> winnerArr = winners;
+		
+		if(mutateRate == 1 && winnerArr.get(0).getFitness() < 0){
+			createNewPopulation();// If the best unit from the initial population has a negative fitness 
+								  // no  bird reached the first barrier
+		}
+		else{
+			setMutateRate(.2);
+		}
+		
+		for(int i = getNumTopPop(); i < getMaxPop(); i++){
+			newUnit mom; newUnit dad; newUnit offspring;
+			Random rand = new Random();
+			if(i == getNumTopPop()){
+				 mom = winnerArr.get(0);
+				 dad = winnerArr.get(1);
+				 offspring = crossOver(mom,dad);
+			}
+			else if(i < getMaxPop() - 2){
+				 mom = winnerArr.get(rand.nextInt(winnerArr.size()- 1));
+				 dad = winnerArr.get(rand.nextInt(winnerArr.size()- 1));
+				 offspring = crossOver(mom,dad);
+			}
+			else{
+				 offspring = winnerArr.get(rand.nextInt());
+			}
+			
+			//offspring = Gen.mutation(offspring); //TODO
+			
+			newUnit nnOffSpring =new newUnit(offspring);
+			nnOffSpring.setIndex(i);
+			add(nnOffSpring);
+		}
+		if(winnerArr.get(0).getFitness() > getBestFitness()){
+		setBestPopIndex(getIteration());
+		setBestFitness(winnerArr.get(0).getFitness());
+		}
+		//sortpop
+		}
 	
 	public int getIteration() {
 		return iteration;
@@ -49,11 +104,14 @@ public class GeneticAlgorithm {
 	public void setBestPopIndex(int bestPopIndex) {
 		this.bestPopIndex = bestPopIndex;
 	}
-	public ArrayList<Population> getPopulationArr() {
+	public ArrayList<newUnit> getPopulationArr() {
 		return populationArr;
 	}
-	public void setPopulationArr(ArrayList<Population> populationArr) {
+	public void setPopulationArr(ArrayList<newUnit> populationArr) {
 		this.populationArr = populationArr;
+	}
+	public void add(newUnit unit){
+		populationArr.add(unit);
 	}
 	public int getScaleFactor() {
 		return scaleFactor;
@@ -84,6 +142,10 @@ public class GeneticAlgorithm {
 	}
 	public void setNumTopPop(int numTopPop) {
 		this.numTopPop = numTopPop;
+	}
+	public newUnit crossOver(newUnit mom, newUnit dad) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
