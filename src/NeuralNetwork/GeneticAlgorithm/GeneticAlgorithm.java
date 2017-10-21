@@ -13,6 +13,8 @@ public class GeneticAlgorithm {
 	private int scaleFactor = 200;
 	private int bestIndex;
 	public int bestFitness;
+	public double gene;
+	ArrayList<newUnit> winnerArr;
 
 
 	public GeneticAlgorithm(int maxUnits,int topPerformingUnits){
@@ -85,7 +87,50 @@ public class GeneticAlgorithm {
 		}
 		//sortpop
 		}
-
+	public ArrayList<newUnit> sort(ArrayList<newUnit> preSort){
+		ArrayList<newUnit> postSort = preSort;
+		
+		for(int i = 0; i < postSort.size() - 1; i++){
+			int min = i;
+			for(int x = i + 1; x < postSort.size(); x++){
+				if(postSort.get(x).getFitness() < postSort.get(min).getFitness()){
+					min = x;
+				}
+			}
+			newUnit temp = postSort.get(min);
+			postSort.set(min, postSort.get(i));
+			postSort.set(i,temp);
+			
+		}
+		return postSort;
+	}
+	
+	public newUnit crossOver(newUnit mom, newUnit dad) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public void selection(){ //sorts by highest fitness marks top as winners and adds winners to winnersArr
+		winnerArr = sort(winnerArr);
+		for(int i = 1; i < numTopPop; i++){ //marks top units as winner
+		populationArr.get(i).setWinner(true);
+		}
+		for(int i = 0; i < numTopPop; i++){
+			winnerArr.set(i,populationArr.get(i));
+		}
+	}
+	public void mutation(newUnit offspring){
+		//for()
+	}
+	public double geneMutation(){
+		Random rand = new Random();
+		if(rand.nextDouble() < mutateRate){
+			double mutateFactor = 1 +((rand.nextDouble() - .5) * 3 + (rand.nextDouble() - .5));
+			 gene = gene * mutateFactor;
+		}
+		return gene;
+	}
+	
 	public int getIteration() {
 		return iteration;
 	}
@@ -142,9 +187,5 @@ public class GeneticAlgorithm {
 	}
 	public void setNumTopPop(int numTopPop) {
 		this.numTopPop = numTopPop;
-	}
-	public newUnit crossOver(newUnit mom, newUnit dad) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
