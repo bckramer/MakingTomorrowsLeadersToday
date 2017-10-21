@@ -1,4 +1,3 @@
-package NeuralNetwork;
 /**
  * Represents a connection between two neurons an the associated weight.
  */
