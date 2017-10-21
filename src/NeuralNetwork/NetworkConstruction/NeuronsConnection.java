@@ -1,3 +1,7 @@
+package NetworkConstruction;
+
+import java.util.Random;
+
 public class NeuronsConnection {
 
     private Neuron fromNeuron;
@@ -9,7 +13,9 @@ public class NeuronsConnection {
     public NeuronsConnection(Neuron fromNeuron, Neuron toNeuron) {
         this.fromNeuron = fromNeuron;
         this.toNeuron = toNeuron;
-        this.weight = Math.random();
+        Random rand = new Random();
+        double randNum = rand.nextDouble() * 2 - 1;
+        this.weight = randNum;
     }
 
     public NeuronsConnection(Neuron fromNeuron, Neuron toNeuron, double weight) {
@@ -42,4 +48,12 @@ return fromNeuron;
 return toNeuron;
 }
 
+    @Override
+    public String toString() {
+        return "NeuronsConnection{" +
+//                "fromNeuron=" + fromNeuron +
+//                ", toNeuron=" + toNeuron +
+                ", weight=" + weight +
+                '}';
+    }
 }
