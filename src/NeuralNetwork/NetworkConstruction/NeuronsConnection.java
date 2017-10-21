@@ -48,4 +48,12 @@ return fromNeuron;
 return toNeuron;
 }
 
+    @Override
+    public String toString() {
+        return "NeuronsConnection{" +
+                "fromNeuron=" + fromNeuron +
+                ", toNeuron=" + toNeuron +
+                ", weight=" + weight +
+                '}';
+    }
 }
