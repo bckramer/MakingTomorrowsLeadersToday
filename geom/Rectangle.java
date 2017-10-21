@@ -19,8 +19,9 @@ public class Rectangle {
 	private int gen;
 	private NeuralNet net;
 	private boolean winner;
+	private int index;
 
-	public Rectangle(float x, float y, float width, float height, float winWidth, float winHeight, Color c, String name, int gen, NeuralNet net) {
+	public Rectangle(float x, float y, float width, float height, float winWidth, float winHeight, Color c, String name, int gen, NeuralNet net, int index) {
 		this.x = x;
 		this.y = y;
 		this.c = c;
@@ -230,8 +231,11 @@ public class Rectangle {
 
 
 	public int getIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 
 }
