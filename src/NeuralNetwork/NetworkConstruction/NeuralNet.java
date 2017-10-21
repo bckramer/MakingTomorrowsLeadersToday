@@ -125,24 +125,6 @@ public class NeuralNet {
         return connections;
     }
 
-    /**
-     * Returns one of the layers in the network
-     * layer 0 = inputLayer
-     * layer 1 = hiddenLayer
-     * layer not(0 or 1) = outputLayer
-     * @param layer
-     * @return
-     */
-    public NeuralNetLayer getInputLayer(int layer) {
-        if (layer == 0) {
-            return inputLayer;
-        } else if (layer == 1) {
-            return hiddenLayer;
-        } else {
-            return outputLayer;
-        }
-    }
-
     public String getId() {
         return id;
     }
@@ -173,5 +155,15 @@ public class NeuralNet {
 
     public void setOutputLayer(NeuralNetLayer outputLayer) {
         this.outputLayer = outputLayer;
+    }
+
+    @Override
+    public String toString() {
+        return "NeuralNet{" +
+                "id='" + id + '\'' +
+                ", inputLayer=" + inputLayer +
+                ", hiddenLayer=" + hiddenLayer +
+                ", outputLayer=" + outputLayer +
+                '}';
     }
 }
