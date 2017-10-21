@@ -208,4 +208,9 @@ public class Rectangle {
 		this.winner = winner;
 	}
 
+	public void setIndex(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
