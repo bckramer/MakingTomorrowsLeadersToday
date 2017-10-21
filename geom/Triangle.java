@@ -14,14 +14,6 @@ public class Triangle {
 		bottom = new Point(p.getX() + 16/2, p.getY() + 17);
 		
 	}
-
-	public boolean intersects(Triangle t) {
-		return 
-	}
-	
-	public boolean intersects(Rectangle r) {
-		return bottom.getY() <= r.getY() && r.getX();
-	}
 	
 	public boolean inBounds(float height) {
 		return topLeft.getY() <= height;
