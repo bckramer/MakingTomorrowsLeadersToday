@@ -30,4 +30,12 @@ public class NeuralNetLayer {
         }
         return neurons.get(neuronPos);
     }
+
+    @Override
+    public String toString() {
+        return "NeuralNetLayer{" +
+                "id='" + id + '\'' +
+                ", neurons=" + neurons +
+                '}';
+    }
 }

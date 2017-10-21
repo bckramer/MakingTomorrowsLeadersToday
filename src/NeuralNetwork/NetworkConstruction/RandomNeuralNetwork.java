@@ -5,6 +5,11 @@ import java.util.Random;
 
 public class RandomNeuralNetwork {
 
+    private NeuralNetLayer inputNetLayer;
+    private NeuralNetLayer hiddenNetLayer;
+    private NeuralNetLayer outputNetLayer;
+
+
     public RandomNeuralNetwork () {
         //Input Layer
         Random rand = new Random();
@@ -64,5 +69,26 @@ public class RandomNeuralNetwork {
         for (Neuron neuron : outputLayerNeurons) {
             neuron.setInputConnections(hiddenToOutput);
         }
+
+        this.inputNetLayer = inputLayer;
+        this.hiddenNetLayer = hiddenLayer;
+        this.outputNetLayer = outputLayer;
+    }
+
+    public NeuralNetLayer getInputNetLayer() {
+        return inputNetLayer;
+    }
+
+    public void setInputNetLayer(NeuralNetLayer inputNetLayer) {
+        this.inputNetLayer = inputNetLayer;
+    }
+
+    @Override
+    public String toString() {
+        return "RandomNeuralNetwork{" +
+                "inputNetLayer=" + inputNetLayer +
+                ", hiddenNetLayer=" + hiddenNetLayer +
+                ", outputNetLayer=" + outputNetLayer +
+                '}';
     }
 }

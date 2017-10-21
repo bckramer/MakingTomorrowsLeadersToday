@@ -4,7 +4,7 @@ import java.util.List;
 /**
  * Calculates the weighted sums of the input neurons' outputs.
  */
-public final class WeightedSumFunction {
+public class WeightedSumFunction {
     /**
     * {@inheritDoc}
     */

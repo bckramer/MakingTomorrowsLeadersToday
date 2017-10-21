@@ -102,4 +102,17 @@ public class Neuron {
     public void setBias(double bias) {
         this.bias = bias;
     }
+
+    @Override
+    public String toString() {
+        return "Neuron{" +
+                "id='" + id + '\'' +
+                ", inputConnections=" + inputConnections +
+                ", outputConnections=" + outputConnections +
+                ", inputSummingFunction=" + inputSummingFunction +
+                ", activationFunction=" + activationFunction +
+                ", output=" + output +
+                ", bias=" + bias +
+                '}';
+    }
 }
