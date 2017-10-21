@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 
+import NetworkConstruction.NeuralNet;
+
 public class Rectangle {
 
 	private float x, y;
@@ -15,8 +17,9 @@ public class Rectangle {
 	private long startingTime;
 	private String name;
 	private int gen;
+	private NeuralNet net;
 
-	public Rectangle(float x, float y, float width, float height, float winWidth, float winHeight, Color c, String name, int gen) {
+	public Rectangle(float x, float y, float width, float height, float winWidth, float winHeight, Color c, String name, int gen, NeuralNet net) {
 		this.x = x;
 		this.y = y;
 		this.c = c;
@@ -30,6 +33,10 @@ public class Rectangle {
 			this.name = name;
 		}
 		this.gen = gen;
+		this.net = net;
+		this.winWidth = winWidth;
+		this.winHeight = winHeight;
+		
 	}
 
 	//I'm so sorry
@@ -107,11 +114,13 @@ public class Rectangle {
 		this.winHeight = winHeight;
 	}
 
-	public void move(boolean direction) {
-		if (direction && x >= winWidth - width) {
+	public void move(double xOut, double yOut) {
+		double output = (xOut > yOut) ? xOut : yOut;
+		//System.out.println(xOut + " " + yOut);
+		if (output >= .5 && x <= winWidth - width) {
 			x += 2;
 		}
-		if (!direction && x >= 0) {
+		if (output < .5 && x >= 0) {
 			x -= 2;
 		}
 	}
@@ -179,6 +188,14 @@ public class Rectangle {
 	
 	public int getGen() {
 		return gen;
+	}
+
+	public NeuralNet getNet() {
+		return net;
+	}
+
+	public void setNet(NeuralNet net) {
+		this.net = net;
 	}
 
 }
