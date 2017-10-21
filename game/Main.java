@@ -142,14 +142,14 @@ public class Main extends BasicGame {
 		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation, new NeuralNet()));
 		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray, "Grey", generation, new NeuralNet()));
 		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation, new NeuralNet()));
-		for (int i = 0; i <  0; i++) {
+		for (int i = 0; i <  990; i++) {
 			Random rand = new Random();
 			Color randColor = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, randColor, null, generation, null));
+			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, randColor, null, generation, new NeuralNet()));
 		}
-		for (int i = 0; i < squares.size(); i++) {
+		/*for (int i = 0; i < squares.size(); i++) {
 			System.out.println(squares.get(i).getNet());
-		}
+		}*/
 	}
 
 	@Override

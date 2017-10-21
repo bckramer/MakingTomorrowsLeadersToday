@@ -117,10 +117,10 @@ public class Rectangle {
 	public void move(double xOut, double yOut) {
 		double output = (xOut > yOut) ? xOut : yOut;
 		//System.out.println(xOut + " " + yOut);
-		if (output >= .5 && x <= winWidth - width) {
+		if (xOut >= .5 && x <= winWidth - width) {
 			x += 2;
 		}
-		if (output < .5 && x >= 0) {
+		if (yOut >= .5 && x >= 0) {
 			x -= 2;
 		}
 	}
