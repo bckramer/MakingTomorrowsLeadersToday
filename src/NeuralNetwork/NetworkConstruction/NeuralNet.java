@@ -13,6 +13,7 @@ public class NeuralNet {
 
     private NeuralNetLayer outputLayer;
 
+
     public NeuralNet(String id, NeuralNetLayer inputLayer, NeuralNetLayer hiddenLayer, NeuralNetLayer outputLayer) {
         this.id = id;
         this.inputLayer = inputLayer;
@@ -21,18 +22,9 @@ public class NeuralNet {
     }
 
     /**
-     * Constructs a neural net with one hidden layer.
-     * @param id
-     * @param inputLayer
-     * @param outputLayer
+     * Random neural net
      */
-    public NeuralNet(String id, NeuralNetLayer inputLayer, NeuralNetLayer outputLayer) {
-        this.id = id;
-        this.inputLayer = inputLayer;
-        this.outputLayer = outputLayer;
-    }
-
-    public NeuralNet getRandomNeuralNet() {
+    public NeuralNet() {
         //Input Layer
         Random rand = new Random();
         double output = rand.nextDouble() * 2 - 1;
@@ -111,7 +103,9 @@ public class NeuralNet {
             neuron.calculateOutput();
         }
 
-        return new NeuralNet("rand", inputLayer, hiddenLayer, outputLayer);
+        this.inputLayer = inputLayer;
+        this.hiddenLayer = hiddenLayer;
+        this.outputLayer = outputLayer;
     }
 
     public ArrayList<Neuron> getAllNeurons() {
