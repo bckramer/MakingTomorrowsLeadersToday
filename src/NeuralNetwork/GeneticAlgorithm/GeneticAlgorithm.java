@@ -125,8 +125,15 @@ public class GeneticAlgorithm {
 	}
 	
 	public Rectangle crossOver(Rectangle mom, Rectangle dad) {
-	//	Random rand = new Random(mom.)
-		return null;
+	    Random rand = new Random();
+		 int neuronStartingPoint = rand.nextInt(mom.getNet().getAllNeurons().size() - 1);
+		 for (int i = neuronStartingPoint; i < mom.getNet().getAllNeurons().size(); i++) {
+			 double biasFromMom = mom.getNet().getAllNeurons().get(i).getBias();
+			 mom.getNet().getAllNeurons().get(i).setBias(dad.getNet().getAllNeurons().get(i).getBias());
+			 dad.getNet().getAllNeurons().get(i).setBias(biasFromMom);
+		 }
+		 Random rand2 = new Random();
+		 return rand2.nextInt(1) == 1 ? mom : dad;
 	}
 	
 	public void selection(){ //sorts by highest fitness marks top as winners and adds winners to winnersArr
@@ -138,8 +145,10 @@ public class GeneticAlgorithm {
 			winnerArr.set(i,populationArr.get(i));
 		}
 	}
-	public void mutation(Random offspring){
-		//for()
+	public void mutation(Rectangle offspring){
+		for (int i = 0; i < offspring.getNet().getAllNeurons(); i++) {
+			
+		}
 	}
 	public double geneMutation(){
 		Random rand = new Random();
