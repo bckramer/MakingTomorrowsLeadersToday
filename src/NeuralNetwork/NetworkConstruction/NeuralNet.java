@@ -148,4 +148,36 @@ public class NeuralNet {
             return outputLayer;
         }
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public NeuralNetLayer getInputLayer() {
+        return inputLayer;
+    }
+
+    public void setInputLayer(NeuralNetLayer inputLayer) {
+        this.inputLayer = inputLayer;
+    }
+
+    public NeuralNetLayer getHiddenLayer() {
+        return hiddenLayer;
+    }
+
+    public void setHiddenLayer(NeuralNetLayer hiddenLayer) {
+        this.hiddenLayer = hiddenLayer;
+    }
+
+    public NeuralNetLayer getOutputLayer() {
+        return outputLayer;
+    }
+
+    public void setOutputLayer(NeuralNetLayer outputLayer) {
+        this.outputLayer = outputLayer;
+    }
 }
