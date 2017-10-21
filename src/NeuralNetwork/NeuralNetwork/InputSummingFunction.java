@@ -1,1 +1,5 @@
-package NeuralNetwork;
+package NeuralNetwork.NeuralNetwork;
+
+public class InputSummingFunction {
+
+}

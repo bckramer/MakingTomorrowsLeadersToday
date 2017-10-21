@@ -1,1 +1,6 @@
-package NeuralNetwork;
+package NeuralNetwork.NeuralNetwork;
+
+
+public class WeightedSumFunction {
+
+}
