@@ -12,13 +12,8 @@ public class GeneticAlgorithm {
 	public int numTopPop;
 	private int scaleFactor = 200;
 	private int bestIndex;
-<<<<<<< HEAD
 	public int bestFitness;
-	
-=======
-	private int bestFitness;
 
->>>>>>> 451568ed1753b8de4f74d03b8bd43c1ccbd78887
 
 	public GeneticAlgorithm(int maxUnits,int topPerformingUnits){
 		maxPop = maxUnits;
@@ -36,7 +31,6 @@ public class GeneticAlgorithm {
 		bestPopIndex = -1;
 		bestFitness = -1;
 	}
-<<<<<<< HEAD
 	public void createNewPopulation(){
 		for(int i = 0; i < maxPop; i++){
 			newUnit temp = new newUnit(2,8,2);
@@ -91,10 +85,7 @@ public class GeneticAlgorithm {
 		}
 		//sortpop
 		}
-	
-=======
 
->>>>>>> 451568ed1753b8de4f74d03b8bd43c1ccbd78887
 	public int getIteration() {
 		return iteration;
 	}
@@ -152,15 +143,8 @@ public class GeneticAlgorithm {
 	public void setNumTopPop(int numTopPop) {
 		this.numTopPop = numTopPop;
 	}
-<<<<<<< HEAD
 	public newUnit crossOver(newUnit mom, newUnit dad) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-=======
-
-
->>>>>>> 451568ed1753b8de4f74d03b8bd43c1ccbd78887
 }

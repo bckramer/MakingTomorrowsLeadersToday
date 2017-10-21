@@ -8,12 +8,11 @@ public class newUnit {
 	private int fitness;
 	private boolean isWinner = false;
 	private ArrayList<newUnit> populationArr;
-	private int genIteration;
 	public double mutateRate = .2;
 	//private int bestPopIndex; use function
-	public int maxPop = 10;
-	public int numTopPop = 4;
-	private int scaleFactor = 200;
+	//public int maxPop = 10;
+	//public int numTopPop = 4;
+	//private int scaleFactor = 200;
 	//public int bestFitness; //usefunction
 	
 	public newUnit(int input,int hidden,int outer){
@@ -60,24 +59,6 @@ public class newUnit {
 	}
 	public void setMutateRate(double mutateRate) {
 		this.mutateRate = mutateRate;
-	}
-	public int getMaxPop() {
-		return maxPop;
-	}
-	public void setMaxPop(int maxPop) {
-		this.maxPop = maxPop;
-	}
-	public int getNumTopPop() {
-		return numTopPop;
-	}
-	public void setNumTopPop(int numTopPop) {
-		this.numTopPop = numTopPop;
-	}
-	public int getScaleFactor() {
-		return scaleFactor;
-	}
-	public void setScaleFactor(int scaleFactor) {
-		this.scaleFactor = scaleFactor;
 	}
 	
 	
