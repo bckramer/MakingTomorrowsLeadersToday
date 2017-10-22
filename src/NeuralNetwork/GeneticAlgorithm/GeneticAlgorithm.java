@@ -45,28 +45,28 @@ public class GeneticAlgorithm {
 		this.width = width;
 		this.height = height;
 		generation = this.generation;
-		ArrayList <Rectangle> squares = new ArrayList<Rectangle>();
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta",
+		ArrayList <Rectangle> arrPop = new ArrayList<Rectangle>();
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta",
 				generation, new NeuralNet(), 0));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue, "Blue", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue, "Blue", generation,
 				new NeuralNet(), 1));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.green, "Green", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.green, "Green", generation,
 				new NeuralNet(), 2));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.yellow, "Yellow", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.yellow, "Yellow", generation,
 				new NeuralNet(), 3));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.cyan, "Cyan", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.cyan, "Cyan", generation,
 				new NeuralNet(), 4));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.orange, "Orange", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.orange, "Orange", generation,
 				new NeuralNet(), 5));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.lightGray, "Light Grey",
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.lightGray, "Light Grey",
 				generation, new NeuralNet(), 6));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation,
 				new NeuralNet(), 7));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray, "Grey", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray, "Grey", generation,
 				new NeuralNet(), 8));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation,
 				new NeuralNet(), 9));
-		return squares;
+		return arrPop;
 	}
 	public ArrayList<Rectangle> createMutatedPopulation(ArrayList<Rectangle> population){
 		
@@ -76,7 +76,7 @@ public class GeneticAlgorithm {
 	public ArrayList<Rectangle> EvolvePop(ArrayList<Rectangle> population){
 		ArrayList<Rectangle> winners = selection(population);
 		
-		if(mutateRate == 0 && winners.get(0).getFitness() > 250){
+		if(mutateRate == 0 && winners.get(0).getFitness() < 250){
 			createNewPopulation(width, height, generation);// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
 		else {
@@ -92,8 +92,8 @@ public class GeneticAlgorithm {
 				 offspring = crossOver(mom,dad);
 			}
 			else if(i < getMaxPop() - 2){
-				 mom = winners.get(rand.nextInt(winners.size()- 1));
-				 dad = winners.get(rand.nextInt(winners.size()- 1));
+				 mom = winners.get(rand.nextInt(winners.size()));
+				 dad = winners.get(rand.nextInt(winners.size()));
 				 offspring = crossOver(mom,dad);
 			}
 			else{
@@ -188,7 +188,7 @@ public class GeneticAlgorithm {
 		Random rand = new Random();
 		if(rand.nextDouble() < mutateRate){
 			double mutateFactor = 1 +((rand.nextDouble() - .5) * 3 + (rand.nextDouble() - .5));
-			 gene = gene / mutateFactor;
+			 gene = gene * mutateFactor;
 		}
 		return gene;
 	}

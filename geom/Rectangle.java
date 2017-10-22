@@ -138,6 +138,8 @@ public class Rectangle {
 	}
 
 	public void move(double xOut, double yOut) {
+//		System.out.print(xOut);
+//		System.out.println(yOut);
 		if (xOut > yOut && x <= winWidth - width) {
 			x += 2;
 		}
