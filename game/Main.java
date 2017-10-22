@@ -94,6 +94,7 @@ public class Main extends BasicGame {
 			neurons.get(1).setOutput(squares.get(x).getClosestY().getY() / 100);
 			List<Neuron> neurons2 = squares.get(x).getNet().getOutputLayer().getNeurons();
 			squares.get(x).move(neurons2.get(0).calculateOutput(), neurons2.get(1).calculateOutput());
+			//System.out.println(squares.get(x).getName() + " " + squares.get);
 			//System.out.println(neurons2.get(0).calculateOutput() + " " + neurons2.get(1).calculateOutput());
 			if (squares.get(x).collidesWithTriangle(triangles)) {
 				deadSquares.add(squares.remove(x));
@@ -155,7 +156,7 @@ public class Main extends BasicGame {
 			squares = ga.createNewPopulation(width, height, generation);// TODO dont hard code
 		} else {
 			squares = ga.createMutatedPopulation(deadSquares);
-			System.out.println(squares);
+			//System.out.println(squares);
 		}
 		deadSquares = new ArrayList<Rectangle>();
 		

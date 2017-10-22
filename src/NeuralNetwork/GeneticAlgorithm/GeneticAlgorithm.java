@@ -78,10 +78,10 @@ public class GeneticAlgorithm {
 		ArrayList<Rectangle> winners = new ArrayList<>();
 		
 		if(population.get(population.size() - 1).getFitness() < 400){
-			System.out.println("TEST");
+			//System.out.println("TEST");
 			createNewPopulation(width, height, generation);// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
-		System.out.println(population.get(population.size() - 1).getFitness());
+		//System.out.println(population.get(population.size() - 1).getFitness());
 //		else {
 //			setMutateRate(.2);
 //		}
@@ -95,13 +95,13 @@ public class GeneticAlgorithm {
 				offspring.setName("GoodBoi1");
 			}
 			
-			if(i == getNumTopPop()){
+			if(i > getNumTopPop() ) {
 				 mom = population.get(population.size() - 1);
 				 dad = population.get(population.size() - 2);
 				 offspring = new Rectangle(crossOver(mom,dad));
 				 offspring.setName("GoodBoi2");
 			}
-			else if (i == getNumTopPop() + 1) {
+			else if (i == getNumTopPop() ) {
 				offspring = new Rectangle(population.get(population.size() - 1));
 				offspring.setName("GoodestBoi");
 			}
@@ -120,13 +120,16 @@ public class GeneticAlgorithm {
 			
 			//Rectangle a = new Rectangle(offspring);
 			//a.setIndex(i);
-			
+			if (offspring.getFitness() > 1000) {
+				System.out.println(offspring);
+			}
 			winners.add(offspring);
 			//population.set(i, a);
 		}
 		for (Rectangle r : winners) {
 			r.setFitness(0);
 		}
+		System.out.println(winners);
 //		if(winners.get(0).getFitness() > bestFitness){
 //			bestFitness = winners.get(0).getFitness();
 //		}

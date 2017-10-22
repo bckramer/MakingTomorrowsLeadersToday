@@ -51,7 +51,7 @@ public class Rectangle {
 		startingTime = System.currentTimeMillis();
 		fitness = 0;
 		this.name = r.getName();
-		this.gen = r.getGen();
+		this.gen = r.getGen() + 1;
 		this.net = r.getNet();
 		this.winWidth = r.getWinWidth();
 		this.winHeight = r.getWinHeight();
@@ -140,9 +140,9 @@ public class Rectangle {
 	public void move(double xOut, double yOut) {
 //		System.out.print(xOut);
 //		System.out.println(yOut);
-		if (xOut >= .3 && x <= winWidth - width) {
+		if (xOut >= .6 && x <= winWidth - width) {
 			x += 2;
-		} else if (yOut >= .3 && x >= 0) {
+		} else if (yOut >= .6 && x >= 0) {
 			x -= 2;
 		}
 	}
@@ -238,7 +238,7 @@ public class Rectangle {
 
 	@Override
 	public String toString() {
-		return "Rectangle [x=" + x + ", y=" + y + ", fitness=" + fitness + ", gen=" + gen + ", net=" + net + ", winner="
+		return "Rectangle " + name + " [x=" + x + ", y=" + y + ", fitness=" + fitness + ", gen=" + gen + ", net=" + net + ", winner="
 				+ winner + "]";
 	}
 
