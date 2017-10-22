@@ -149,11 +149,11 @@ public class Main extends BasicGame {
 		hasFallen = false;
 		maxTriangles = 100;
 		triangles.add(new Triangle(new Point(width / 2, 250)));
-//		triangles.add(new Triangle(new Point(0, 250)));
-//		triangles.add(new Triangle(new Point(width - 7, 250)));
+		triangles.add(new Triangle(new Point(0, 250)));
+		triangles.add(new Triangle(new Point(width - 7, 250)));
 		ga = new GeneticAlgorithm(10, 4, squares);
 		if (generation == 0) {
-			squares = ga.createNewPopulation(width, height, generation, 100);// TODO dont hard code
+			squares = ga.createNewPopulation(width, height, generation, 10);// TODO dont hard code
 		} else {
 			squares = ga.createMutatedPopulation(deadSquares);
 			System.out.println(squares);
@@ -168,7 +168,7 @@ public class Main extends BasicGame {
 		if (rand.nextInt(maxTriangles) == 1) {
 			triangles.add(new Triangle(new Point(rand.nextInt(800), rand.nextInt(100))));
 		}
-		if (System.nanoTime() % 50 == 0 && maxTriangles > 2) {
+		if (System.nanoTime() % 50 == 0 && maxTriangles > 10) {
 			maxTriangles--;
 		}
 		//for (Rectangle r: squares) {
@@ -181,11 +181,7 @@ public class Main extends BasicGame {
 		app = new AppGameContainer(new Main("Making the Leaders of Tomorrow Today"));
 		app.setDisplayMode(width, height, false);
 		app.setFullscreen(false);
-<<<<<<< HEAD
-		app.setTargetFrameRate(1000);
-=======
-		app.setTargetFrameRate(300);
->>>>>>> parent of 409e765... More Imporevments (Probably) to the genetic algorith
+		app.setTargetFrameRate(500);
 		app.setShowFPS(true);
 		app.start();
 

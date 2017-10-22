@@ -66,42 +66,35 @@ public class GeneticAlgorithm {
 			createNewPopulation(width, height, generation, population.size());// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
 		//System.out.println(population.get(population.size() - 1).getFitness());
-<<<<<<< HEAD
 		else {
 			setMutateRate(.2);
 		}
-		for(int i = 0; i < population.size() - 1; i++){
-=======
-//		else {
-//			setMutateRate(.2);
-//		}
 		for(int i = 0; i < population.size(); i++){
->>>>>>> parent of 409e765... More Imporevments (Probably) to the genetic algorith
 			Rectangle mom; Rectangle dad; Rectangle offspring;
 			Random rand = new Random();
-			
-			if (population.get(i).getFitness() < 250) {
+			int random = rand.nextInt(10);
+			if (population.get(i).getFitness() < 400) {
 				population.get(i).setNet(new NeuralNet());
 				offspring = new Rectangle(population.get(i));
 				offspring.setName("GoodBoi1");
 			}
 			
-			if(i > getNumTopPop() ) {
+			if(random > 5) {
 				 mom = population.get(population.size() - 1);
 				 dad = population.get(population.size() - 2);
 				 offspring = new Rectangle(crossOver(mom,dad));
 				 offspring.setName("GoodBoi2");
 			}
-			else if (i == getNumTopPop() ) {
-				offspring = new Rectangle(population.get(population.size() - 1));
-				offspring.setName("GoodestBoi");
+			else if (random == 5) {
+				mom = population.get(population.size() - 1) ;
+				dad = population.get(rand.nextInt(population.size()));
+				offspring = new Rectangle(crossOver(mom,dad));
+				offspring.setName("GoodBoi4");
 			}
 			else //if(i < getMaxPop() - 2){
 			{
-				 mom = population.get(population.size() - 1) ;
-				 dad = population.get(rand.nextInt(population.size()));
-				 offspring = new Rectangle(crossOver(mom,dad));
-				 offspring.setName("GoodBoi4");
+				offspring = new Rectangle(population.get(population.size() - 1));
+				offspring.setName("GoodestBoi");
 			}
 //			else{
 //				 offspring = winners.get(rand.nextInt(winners.size()-1));
@@ -200,11 +193,7 @@ public class GeneticAlgorithm {
 	public double geneMutation(double gene){
 		Random rand = new Random();
 		if(rand.nextDouble() < mutateRate){
-<<<<<<< HEAD
 			double mutateFactor = .95;
-=======
-			double mutateFactor = 1 +((rand.nextDouble() - .5) * 3 + (rand.nextDouble() - .5));
->>>>>>> parent of 409e765... More Imporevments (Probably) to the genetic algorith
 			 gene = gene * mutateFactor;
 		}
 		return gene;
