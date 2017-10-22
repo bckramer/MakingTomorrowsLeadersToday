@@ -35,14 +35,15 @@ public class Main extends BasicGame {
 	private long startTime;
 	private int generation = 0;
 	private String fileName = System.getProperty("user.home") + "\\desktop\\recs";
+	private boolean hasFallen;
 
 	public Main(String title) {
 		super(title);
 		triangles = new ArrayList<Triangle>();
 		squares = new ArrayList<Rectangle>();
 		deadSquares = new ArrayList<Rectangle>();
-		winners = new ArrayList<Rectangle>();
 		System.out.println(new Color(Color.white));
+		hasFallen = false;
 	}
 
 	@Override
@@ -79,7 +80,9 @@ public class Main extends BasicGame {
 			g.drawLine(squares.get(x).getX() + squares.get(x).getWidth() / 2, squares.get(x).getY(), py.getX(),
 					py.getY());
 
-			squares.get(x).updateFitness();
+			if (hasFallen) {
+				squares.get(x).updateFitness();
+			}
 
 			List<Neuron> neurons = squares.get(x).getNet().getInputLayer().getNeurons();
 			neurons.get(0).setOutput(squares.get(x).getClosestX().getX());
@@ -88,9 +91,8 @@ public class Main extends BasicGame {
 			List<Neuron> neurons2 = squares.get(x).getNet().getOutputLayer().getNeurons();
 			squares.get(x).move(neurons2.get(0).calculateOutput(), neurons2.get(1).calculateOutput());
 			if (squares.get(x).collidesWithTriangle(triangles)) {
-				if (squares.size() <= 3) {
+				if (squares.size() <= 3) {//maybe a problem?
 					winners.add(squares.get(x));
-					winners.get(x).setIndex(winners.size());
 				}
 				deadSquares.add(squares.remove(x));
 			}
@@ -124,6 +126,7 @@ public class Main extends BasicGame {
 
 			if (!triangles.get(x).inBounds(height - 17)) {
 				triangles.remove(triangles.get(x));
+				hasFallen = true;
 			}
 		}
 	}
@@ -131,45 +134,20 @@ public class Main extends BasicGame {
 	@Override
 	public void init(GameContainer arg0) throws SlickException {
 		startTime = System.currentTimeMillis();
+		hasFallen = false;
 		maxTriangles = 100;
 		triangles.add(new Triangle(new Point(width / 2, 250)));
+		triangles.add(new Triangle(new Point(0, 250)));
+		triangles.add(new Triangle(new Point(width - 7, 250)));
+		GeneticAlgorithm ga = new GeneticAlgorithm(10, 4, squares);
 		if (generation == 0) {
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta",
-					generation, new NeuralNet(), 0));
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue, "Blue", generation,
-					new NeuralNet(), 1));
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.green, "Green", generation,
-					new NeuralNet(), 2));
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.yellow, "Yellow", generation,
-					new NeuralNet(), 3));
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.cyan, "Cyan", generation,
-					new NeuralNet(), 4));
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.orange, "Orange", generation,
-					new NeuralNet(), 5));
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.lightGray, "Light Grey",
-					generation, new NeuralNet(), 6));
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation,
-					new NeuralNet(), 7));
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray, "Grey", generation,
-					new NeuralNet(), 8));
-			squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation,
-					new NeuralNet(), 9));
-			/*
-			 * for (int i = 0; i < 0; i++) { Random rand = new Random(); Color randColor =
-			 * new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-			 * squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height,
-			 * randColor, null, generation, new NeuralNet())); }
-			 */
+			squares = ga.createNewPopulation(width, height, generation);// TODO dont hard code
 		} else {
-			GeneticAlgorithm ga = new GeneticAlgorithm(10, 4);
-			//ga.createNewPopulation();
-			ga.EvolvePop(winners);
+			squares = ga.createMutatedPopulation(winners);
+			System.out.println(squares);
 		}
-		winners.clear();
-		/*
-		 * for (int i = 0; i < squares.size(); i++) {
-		 * System.out.println(squares.get(i).getNet()); }
-		 */
+		winners = new ArrayList<Rectangle>();
+
 	}
 
 	@Override

@@ -79,6 +79,7 @@ public class Rectangle {
 	
 	public void updateFitness() {
 		fitness = System.currentTimeMillis() - startingTime;
+		System.out.println(fitness);
 	}
 
 	public float getWidth() {
@@ -229,11 +230,6 @@ public class Rectangle {
 		this.winner = winner;
 	}
 
-	public void setIndex(int i) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public int getIndex() {
 		return index;
 	}
@@ -242,5 +238,10 @@ public class Rectangle {
 		this.index = index;
 	}
 
+	@Override
+	public String toString() {
+		return "Rectangle [x=" + x + ", y=" + y + ", fitness=" + fitness + ", gen=" + gen + ", net=" + net + ", winner="
+				+ winner + "]";
+	}
 
 }
