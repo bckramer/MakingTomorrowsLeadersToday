@@ -138,6 +138,7 @@ public class Rectangle {
 	}
 
 	public void move(double xOut, double yOut) {
+<<<<<<< HEAD
 		System.out.print(xOut);
 		System.out.println(yOut);
 		if(xOut >= .5 && yOut >= .5){
@@ -149,8 +150,13 @@ public class Rectangle {
 			}
 		}
 		else if (xOut >= .5 && x <= winWidth - width) {
+=======
+//		System.out.print(xOut);
+//		System.out.println(yOut);
+		if (xOut >= .6 && x <= winWidth - width) {
+>>>>>>> parent of 409e765... More Imporevments (Probably) to the genetic algorith
 			x += 2;
-		} else if (yOut >= .5 && x >= 0) {
+		} else if (yOut >= .6 && x >= 0) {
 			x -= 2;
 		}
 //		if(x <= 0){
