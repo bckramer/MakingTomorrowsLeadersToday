@@ -74,46 +74,64 @@ public class GeneticAlgorithm {
 	}
 	
 	public ArrayList<Rectangle> EvolvePop(ArrayList<Rectangle> population){
-		ArrayList<Rectangle> winners = selection(population);
+		//ArrayList<Rectangle> winners = selection(population);
+		ArrayList<Rectangle> winners = new ArrayList<>();
 		
-		if(mutateRate == 0 && winners.get(0).getFitness() < 250){
+		if(population.get(population.size() - 1).getFitness() < 400){
+			System.out.println("TEST");
 			createNewPopulation(width, height, generation);// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
-		else {
-			setMutateRate(.2);
-		}
-		
-		for(int i = getNumTopPop(); i < getMaxPop(); i++){
+		System.out.println(population.get(population.size() - 1).getFitness());
+//		else {
+//			setMutateRate(.2);
+//		}
+		for(int i = 0; i < population.size(); i++){
 			Rectangle mom; Rectangle dad; Rectangle offspring;
 			Random rand = new Random();
+			
+			if (population.get(i).getFitness() < 400) {
+				population.get(i).setNet(new NeuralNet());
+				offspring = new Rectangle(population.get(i));
+				offspring.setName("GoodBoi1");
+			}
+			
 			if(i == getNumTopPop()){
-				 mom = winners.get(0);
-				 dad = winners.get(1);
-				 offspring = crossOver(mom,dad);
+				 mom = population.get(population.size() - 1);
+				 dad = population.get(population.size() - 2);
+				 offspring = new Rectangle(crossOver(mom,dad));
+				 offspring.setName("GoodBoi2");
 			}
-			else if(i < getMaxPop() - 2){
-				 mom = winners.get(rand.nextInt(winners.size()));
-				 dad = winners.get(rand.nextInt(winners.size()));
-				 offspring = crossOver(mom,dad);
+			else if (i == getNumTopPop() + 1) {
+				offspring = new Rectangle(population.get(population.size() - 1));
+				offspring.setName("GoodestBoi");
 			}
-			else{
-				 offspring = winners.get(rand.nextInt(winners.size()-1));
+			else //if(i < getMaxPop() - 2){
+			{
+				 mom = population.get(rand.nextInt(population.size() - 5) + 4) ;
+				 dad = population.get(rand.nextInt(population.size() - 5) + 4);
+				 offspring = new Rectangle(crossOver(mom,dad));
+				 offspring.setName("GoodBoi4");
 			}
+//			else{
+//				 offspring = winners.get(rand.nextInt(winners.size()-1));
+//			}
 			
-			offspring = mutation(offspring);
+			//offspring = mutation(offspring);
 			
-			Rectangle a = new Rectangle(offspring);
-			a.setIndex(i);
+			//Rectangle a = new Rectangle(offspring);
+			//a.setIndex(i);
 			
 			winners.add(offspring);
-			
-			population.set(i,a);
+			//population.set(i, a);
 		}
-		if(winners.get(0).getFitness() > bestFitness){
-			bestFitness = winners.get(0).getFitness();
+		for (Rectangle r : winners) {
+			r.setFitness(0);
 		}
+//		if(winners.get(0).getFitness() > bestFitness){
+//			bestFitness = winners.get(0).getFitness();
+//		}
 		
-		return population;
+		return winners;
 	}
 	
 	public ArrayList<Rectangle> sortFitness(ArrayList<Rectangle> preSort){
@@ -160,6 +178,7 @@ public class GeneticAlgorithm {
 			 dad.getNet().getAllNeurons().get(i).setBias(biasFromMom);
 		 }
 		 Random rand2 = new Random();
+		 //System.out.println("crossOver Test: " + mom + " " + dad);
 		 return rand2.nextInt(1) == 1 ? mom : dad;
 	}
 	

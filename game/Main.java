@@ -109,7 +109,7 @@ public class Main extends BasicGame {
 //				winners.add(deadSquares.get(deadSquares.size()-4));
 				for (Rectangle r: deadSquares) {
 					r.setX(width/2);
-					r.setFitness(0);
+					//r.setFitness(0);
 			}
 				/*
 				 * SpreadsheetGenerator gen = new SpreadsheetGenerator(deadSquares, fileName);
@@ -155,7 +155,7 @@ public class Main extends BasicGame {
 			squares = ga.createNewPopulation(width, height, generation);// TODO dont hard code
 		} else {
 			squares = ga.createMutatedPopulation(deadSquares);
-			//System.out.println(squares);
+			System.out.println(squares);
 		}
 		deadSquares = new ArrayList<Rectangle>();
 		
