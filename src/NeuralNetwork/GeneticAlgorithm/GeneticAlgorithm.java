@@ -66,12 +66,15 @@ public class GeneticAlgorithm {
 				new NeuralNet(), 8));
 		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation,
 				new NeuralNet(), 9));
+<<<<<<< HEAD
 		
 		Random rand = new Random();
 		for (int i = 0; i < 90; i++) {
 			arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()), "White", generation,
 					new NeuralNet(), i+9+1));
 		}
+=======
+>>>>>>> 97cc238f236de7d85ce469fcc1df40387ef39989
 		return arrPop;
 	}
 	public ArrayList<Rectangle> createMutatedPopulation(ArrayList<Rectangle> population){
@@ -88,9 +91,15 @@ public class GeneticAlgorithm {
 			createNewPopulation(width, height, generation);// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
 		//System.out.println(population.get(population.size() - 1).getFitness());
+<<<<<<< HEAD
 //		else {
 //			setMutateRate(.2);
 //		}
+=======
+		else {
+			//setMutateRate(.2);
+		}
+>>>>>>> 97cc238f236de7d85ce469fcc1df40387ef39989
 		for(int i = 0; i < population.size(); i++){
 			Rectangle mom; Rectangle dad; Rectangle offspring;
 			Random rand = new Random();
@@ -99,6 +108,7 @@ public class GeneticAlgorithm {
 				population.get(i).setNet(new NeuralNet());
 				offspring = new Rectangle(population.get(i));
 				offspring.setName("GoodBoi1");
+<<<<<<< HEAD
 			}
 			
 			if(i > getNumTopPop() ) {
@@ -110,6 +120,24 @@ public class GeneticAlgorithm {
 			else if (i == getNumTopPop() ) {
 				offspring = new Rectangle(population.get(population.size() - 1));
 				offspring.setName("GoodestBoi");
+=======
+				//offspring = mutation(offspring);
+			}
+			
+			if(i > getNumTopPop() ) {
+				 mom = population.get(population.size() - 1);
+				 dad = population.get(population.size() - 2);
+				 offspring = new Rectangle(crossOver(mom,dad));
+				 offspring.setName("GoodBoi2");
+				 //offspring = mutation(offspring);
+				 System.out.println(offspring.getNet().getTotalOutput());
+			}
+			else if (i == getNumTopPop() ) {
+				offspring = new Rectangle(population.get(population.size() - 1));
+				offspring.setName("GoodestBoi");
+				//offspring = mutation(offspring);
+				System.out.println(offspring.getNet().getTotalOutput());
+>>>>>>> 97cc238f236de7d85ce469fcc1df40387ef39989
 			}
 			else //if(i < getMaxPop() - 2){
 			{
@@ -117,6 +145,11 @@ public class GeneticAlgorithm {
 				 dad = population.get(rand.nextInt(population.size() - 5) + 4);
 				 offspring = new Rectangle(crossOver(mom,dad));
 				 offspring.setName("GoodBoi4");
+<<<<<<< HEAD
+=======
+				 offspring = mutation(offspring);
+				 System.out.println(offspring.getNet().getTotalOutput());
+>>>>>>> 97cc238f236de7d85ce469fcc1df40387ef39989
 			}
 //			else{
 //				 offspring = winners.get(rand.nextInt(winners.size()-1));
@@ -126,20 +159,32 @@ public class GeneticAlgorithm {
 			
 			//Rectangle a = new Rectangle(offspring);
 			//a.setIndex(i);
+<<<<<<< HEAD
 			if (offspring.getFitness() > 1000) {
 				System.out.println(offspring);
 			}
 			winners.add(offspring);
+=======
+			winners.add(offspring);
+			
+>>>>>>> 97cc238f236de7d85ce469fcc1df40387ef39989
 			//population.set(i, a);
 		}
 		for (Rectangle r : winners) {
 			r.setFitness(0);
 		}
+<<<<<<< HEAD
 		System.out.println(winners);
 //		if(winners.get(0).getFitness() > bestFitness){
 //			bestFitness = winners.get(0).getFitness();
 //		}
 		
+=======
+		//System.out.println(winners);
+//		if(winners.get(0).getFitness() > bestFitness){
+//			bestFitness = winners.get(0).getFitness();
+//		});
+>>>>>>> 97cc238f236de7d85ce469fcc1df40387ef39989
 		return winners;
 	}
 	
@@ -214,8 +259,13 @@ public class GeneticAlgorithm {
 	}
 	public double geneMutation(double gene){
 		Random rand = new Random();
+		//gene = 0;
 		if(rand.nextDouble() < mutateRate){
+<<<<<<< HEAD
 			double mutateFactor = 1 +((rand.nextDouble() - .5) * 3 + (rand.nextDouble() - .5));
+=======
+			double mutateFactor = .95;
+>>>>>>> 97cc238f236de7d85ce469fcc1df40387ef39989
 			 gene = gene * mutateFactor;
 		}
 		return gene;

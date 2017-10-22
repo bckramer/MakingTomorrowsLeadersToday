@@ -47,9 +47,17 @@ public class Main extends BasicGame {
 		renderTriangles(gc, g);
 		renderSquares(gc, g);
 		g.setColor(Color.black);
+<<<<<<< HEAD
 
 		// System.out.println();
 
+=======
+		
+		//System.out.println();
+	
+		
+		
+>>>>>>> 97cc238f236de7d85ce469fcc1df40387ef39989
 	}
 
 	public void renderSquares(GameContainer gc, Graphics g) throws SlickException {
@@ -81,10 +89,16 @@ public class Main extends BasicGame {
 			neurons.get(0).setOutput(squares.get(x).getClosestX().getX() / 100);
 			neurons.get(1).setOutput(squares.get(x).getClosestY().getY() / 100);
 			List<Neuron> neurons2 = squares.get(x).getNet().getOutputLayer().getNeurons();
+			//System.out.println(neurons2.get(0).calculateOutput() + " " + neurons2.get(1).calculateOutput());
 			squares.get(x).move(neurons2.get(0).calculateOutput(), neurons2.get(1).calculateOutput());
+<<<<<<< HEAD
 			// System.out.println(squares.get(x).getName() + " " + squares.get);
 			// System.out.println(neurons2.get(0).calculateOutput() + " " +
 			// neurons2.get(1).calculateOutput());
+=======
+			//System.out.println(squares.get(x).getName() + " " + squares.get);
+			//System.out.println(neurons2.get(0).calculateOutput() + " " + neurons2.get(1).calculateOutput());
+>>>>>>> 97cc238f236de7d85ce469fcc1df40387ef39989
 			if (squares.get(x).collidesWithTriangle(triangles)) {
 				deadSquares.add(squares.remove(x));
 			}
@@ -92,6 +106,7 @@ public class Main extends BasicGame {
 
 				generation++;
 				triangles.clear();
+<<<<<<< HEAD
 
 				// winners.add(deadSquares.get(deadSquares.size()-1));
 				// winners.add(deadSquares.get(deadSquares.size()-2));
@@ -101,6 +116,17 @@ public class Main extends BasicGame {
 					r.setX(width / 2);
 					// r.setFitness(0);
 				}
+=======
+		
+//				winners.add(deadSquares.get(deadSquares.size()-1));
+//				winners.add(deadSquares.get(deadSquares.size()-2));
+//				winners.add(deadSquares.get(deadSquares.size()-3));
+//				winners.add(deadSquares.get(deadSquares.size()-4));
+				for (Rectangle r: deadSquares) {
+					r.setX(width/2);
+					//r.setFitness(0);
+			     }
+>>>>>>> 97cc238f236de7d85ce469fcc1df40387ef39989
 				/*
 				 * SpreadsheetGenerator gen = new SpreadsheetGenerator(deadSquares, fileName);
 				 * try { gen.generate(); } catch (FileNotFoundException e) { // TODO
@@ -144,21 +170,40 @@ public class Main extends BasicGame {
 			squares = ga.createNewPopulation(width, height, generation);// TODO dont hard code
 		} else {
 			squares = ga.createMutatedPopulation(deadSquares);
+<<<<<<< HEAD
 			// System.out.println(squares);
 		}
 		deadSquares = new ArrayList<Rectangle>();
 
+=======
+			//System.out.println(squares);
+		}
+		deadSquares = new ArrayList<Rectangle>();
+		
+>>>>>>> 97cc238f236de7d85ce469fcc1df40387ef39989
 	}
 
 	@Override
 	public void update(GameContainer arg0, int arg1) throws SlickException {
 		Random rand = new Random();
+<<<<<<< HEAD
 		if (rand.nextInt(maxTriangles) > maxTriangles- 10)
 		triangles.add(new Triangle(new Point(rand.nextInt(800), rand.nextInt(100))));
 
 		// for (Rectangle r: squares) {
 		// System.out.println(r.getFitness());
 		// }
+=======
+		if (rand.nextInt(maxTriangles) == 1) {
+			triangles.add(new Triangle(new Point(rand.nextInt(800), rand.nextInt(100))));
+		}
+		if (System.nanoTime() % 50 == 0 && maxTriangles > 2) {
+			maxTriangles--;
+		}
+		//for (Rectangle r: squares) {
+			//System.out.println(r.getFitness());
+	//}
+>>>>>>> 97cc238f236de7d85ce469fcc1df40387ef39989
 
 	}
 
@@ -166,7 +211,7 @@ public class Main extends BasicGame {
 		app = new AppGameContainer(new Main("Making the Leaders of Tomorrow Today"));
 		app.setDisplayMode(width, height, false);
 		app.setFullscreen(false);
-		app.setTargetFrameRate(144);
+		app.setTargetFrameRate(1000);
 		app.setShowFPS(true);
 		app.start();
 
