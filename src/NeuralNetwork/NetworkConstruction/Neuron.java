@@ -47,7 +47,6 @@ public class Neuron {
     }
 
     public double calculateOutput() {
-        //NOTE - May need fixing
         if (getInputConnections() == null) {
             return activationFunction.calculateOutput(output, bias);
         }

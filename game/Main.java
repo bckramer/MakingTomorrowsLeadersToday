@@ -19,7 +19,6 @@ import NetworkConstruction.Neuron;
 import geom.Point;
 import geom.Rectangle;
 import geom.Triangle;
-import util.SpreadsheetGenerator;
 
 public class Main extends BasicGame {
 
@@ -56,11 +55,6 @@ public class Main extends BasicGame {
 		renderTriangles(gc, g);
 		renderSquares(gc, g);
 		g.setColor(Color.black);
-		
-		//System.out.println();
-	
-		
-		
 	}
 
 	public void renderSquares(GameContainer gc, Graphics g) throws SlickException {
@@ -94,8 +88,6 @@ public class Main extends BasicGame {
 			neurons.get(1).setOutput(squares.get(x).getClosestY().getY() / 100);
 			List<Neuron> neurons2 = squares.get(x).getNet().getOutputLayer().getNeurons();
 			squares.get(x).move(neurons2.get(0).calculateOutput(), neurons2.get(1).calculateOutput());
-			//System.out.println(squares.get(x).getName() + " " + squares.get);
-			//System.out.println(neurons2.get(0).calculateOutput() + " " + neurons2.get(1).calculateOutput());
 			if (squares.get(x).collidesWithTriangle(triangles)) {
 				deadSquares.add(squares.remove(x));
 			}
@@ -104,20 +96,9 @@ public class Main extends BasicGame {
 				generation++;
 				triangles.clear();
 		
-//				winners.add(deadSquares.get(deadSquares.size()-1));
-//				winners.add(deadSquares.get(deadSquares.size()-2));
-//				winners.add(deadSquares.get(deadSquares.size()-3));
-//				winners.add(deadSquares.get(deadSquares.size()-4));
 				for (Rectangle r: deadSquares) {
 					r.setX(width/2);
-					//r.setFitness(0);
 			}
-				/*
-				 * SpreadsheetGenerator gen = new SpreadsheetGenerator(deadSquares, fileName);
-				 * try { gen.generate(); } catch (FileNotFoundException e) { // TODO
-				 * Auto-generated catch block e.printStackTrace(); } catch (IOException e) { //
-				 * TODO Auto-generated catch block e.printStackTrace(); }
-				 */
 				init(gc);
 			}
 		}
@@ -147,13 +128,13 @@ public class Main extends BasicGame {
 	public void init(GameContainer arg0) throws SlickException {
 		startTime = System.currentTimeMillis();
 		hasFallen = false;
-		maxTriangles = 100;
+		maxTriangles = 45;
 		triangles.add(new Triangle(new Point(width / 2, 250)));
 		triangles.add(new Triangle(new Point(0, 250)));
 		triangles.add(new Triangle(new Point(width - 7, 250)));
 		ga = new GeneticAlgorithm(10, 4, squares);
 		if (generation == 0) {
-			squares = ga.createNewPopulation(width, height, generation, 10);// TODO dont hard code
+			squares = ga.createNewPopulation(width, height, generation, 10);
 		} else {
 			squares = ga.createMutatedPopulation(deadSquares);
 			System.out.println(squares);
@@ -168,12 +149,9 @@ public class Main extends BasicGame {
 		if (rand.nextInt(maxTriangles) == 1) {
 			triangles.add(new Triangle(new Point(rand.nextInt(800), rand.nextInt(100))));
 		}
-		if (System.nanoTime() % 50 == 0 && maxTriangles > 10) {
+		if (System.nanoTime() % 50 == 0 && maxTriangles > 15) {
 			maxTriangles--;
 		}
-		//for (Rectangle r: squares) {
-			//System.out.println(r.getFitness());
-	//}
 
 	}
 
@@ -181,7 +159,7 @@ public class Main extends BasicGame {
 		app = new AppGameContainer(new Main("Making the Leaders of Tomorrow Today"));
 		app.setDisplayMode(width, height, false);
 		app.setFullscreen(false);
-		app.setTargetFrameRate(500);
+		app.setTargetFrameRate(200);
 		app.setShowFPS(true);
 		app.start();
 

@@ -19,7 +19,6 @@ public class GeneticAlgorithm {
 	private int bestIndex;
 	public float bestFitness;
 	public double gene;
-	//ArrayList<Rectangle> winnerArr;
 	private float width;
 	private float height;
 	private int generation;
@@ -58,14 +57,11 @@ public class GeneticAlgorithm {
 	}
 	
 	public ArrayList<Rectangle> EvolvePop(ArrayList<Rectangle> population){
-		//ArrayList<Rectangle> winners = selection(population);
 		ArrayList<Rectangle> winners = new ArrayList<>();
 		
 		if(population.get(population.size() - 1).getFitness() < 250){
-			//System.out.println("TEST");
 			createNewPopulation(width, height, generation, population.size());// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
-		//System.out.println(population.get(population.size() - 1).getFitness());
 		else {
 			setMutateRate(.2);
 		}
@@ -91,32 +87,20 @@ public class GeneticAlgorithm {
 				offspring = new Rectangle(crossOver(mom,dad));
 				offspring.setName("GoodBoi4");
 			}
-			else //if(i < getMaxPop() - 2){
+			else
 			{
 				offspring = new Rectangle(population.get(population.size() - 1));
 				offspring.setName("GoodestBoi");
 			}
-//			else{
-//				 offspring = winners.get(rand.nextInt(winners.size()-1));
-//			}
-			
-			//offspring = mutation(offspring);
-			
-			//Rectangle a = new Rectangle(offspring);
-			//a.setIndex(i);
 			if (offspring.getFitness() > 1000) {
 				System.out.println(offspring);
 			}
 			winners.add(offspring);
-			//population.set(i, a);
 		}
 		for (Rectangle r : winners) {
 			r.setFitness(0);
 		}
 		System.out.println(winners);
-//		if(winners.get(0).getFitness() > bestFitness){
-//			bestFitness = winners.get(0).getFitness();
-//		}
 		
 		return winners;
 	}
@@ -165,15 +149,11 @@ public class GeneticAlgorithm {
 			 dad.getNet().getAllNeurons().get(i).setBias(biasFromMom);
 		 }
 		 Random rand2 = new Random();
-		 //System.out.println("crossOver Test: " + mom + " " + dad);
 		 return rand2.nextInt(1) == 1 ? mom : dad;
 	}
 	
-	public ArrayList<Rectangle> selection(ArrayList<Rectangle> winnerArr){ //sorts by highest fitness marks top as winners and adds winners to winnersArr
+	public ArrayList<Rectangle> selection(ArrayList<Rectangle> winnerArr){ 
 		winnerArr = sortFitness(winnerArr);
-//		for(int i = 1; i < numTopPop; i++){ //marks top units as winner
-//			squares.get(i).setWinner(true);
-//		}
 		ArrayList<Rectangle> a = new ArrayList<Rectangle>();
 		for(int i = 0; i < 4; i++){
 			a.add(winnerArr.get(i));

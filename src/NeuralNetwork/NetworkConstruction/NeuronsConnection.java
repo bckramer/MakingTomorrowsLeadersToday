@@ -26,11 +26,11 @@ public class NeuronsConnection {
 
     public double getWeight() {
         return weight;
-}
+    }
 
     public void setWeight(double weight) {
-this.weight = weight;
-}
+    	this.weight = weight;
+    }
 
     public double getInput() {
         return fromNeuron.calculateOutput();
@@ -41,18 +41,16 @@ this.weight = weight;
     }
 
     public Neuron getFromNeuron() {
-return fromNeuron;
-}
+    	return fromNeuron;
+    }
 
     public Neuron getToNeuron() {
-return toNeuron;
-}
+    	return toNeuron;
+    }
 
     @Override
     public String toString() {
         return "NeuronsConnection{" +
-//                "fromNeuron=" + fromNeuron +
-//                ", toNeuron=" + toNeuron +
                 ", weight=" + weight +
                 '}';
     }

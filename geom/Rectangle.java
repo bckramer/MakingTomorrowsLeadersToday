@@ -149,20 +149,12 @@ public class Rectangle {
 			}
 		}
 		else if (xOut >= .5 && x <= winWidth - width) {
-//		System.out.print(xOut);
-//		System.out.println(yOut);
 		if (xOut >= .6 && x <= winWidth - width) {
 			x += 2;
 		} else if (yOut >= .6 && x >= 2) {
 			x -= 2;
 			}
 		}
-//		if(x <= 0){
-//			x = winWidth-width - 1;
-//		}
-//		if(x>= winWidth - width){
-//			x = 1;
-//		}
 		
 	}
 
