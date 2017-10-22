@@ -170,6 +170,7 @@ public class GeneticAlgorithm {
 	public void mutation(Rectangle offspring){
 		for (int i = 0; i < offspring.getNet().getAllNeurons().size(); i++) {
 			offspring.getNet().getAllNeurons().get(i).setBias(geneMutation(offspring.getNet().getAllNeurons().get(i).getBias()));
+			//System.out.println(offspring.getNet().getAllNeurons().get(i).getBias());
 		}
 		
 		for (int i = 0; i < offspring.getNet().getAllConnections().size(); i++) {
@@ -179,7 +180,7 @@ public class GeneticAlgorithm {
 	public double geneMutation(double gene){
 		Random rand = new Random();
 		if(rand.nextDouble() < mutateRate){
-			double mutateFactor = 1 +((rand.nextDouble() - .5) * 3 + (rand.nextDouble() - .5));
+			double mutateFactor = ((rand.nextDouble() * 2 - 1));
 			 gene = gene * mutateFactor;
 		}
 		return gene;

@@ -85,9 +85,10 @@ public class Main extends BasicGame {
 		
 
 			List<Neuron> neurons = squares.get(x).getNet().getInputLayer().getNeurons();
-			neurons.get(0).setOutput(squares.get(x).getClosestX().getX());
-			neurons.get(1).setOutput(squares.get(x).getClosestY().getY());
-			System.out.println(neurons.get(0).calculateOutput() + " " + neurons.get(1).calculateOutput());
+			neurons.get(0).setOutput(squares.get(x).getClosestX().getX() / 100);
+			neurons.get(1).setOutput(squares.get(x).getClosestY().getY() / 100);
+			//System.out.println(squares.get(x).getClosestX().getX() / 100 + " " + squares.get(x).getClosestY().getY() / 100);
+			//System.out.println(neurons.get(0).calculateOutput() + " " + neurons.get(1).calculateOutput());
 			//System.out.println(squares.get(x).getNet().getInputLayer().getNeurons().get(0).calculateOutput() + " " + squares.get(x).getNet().getInputLayer().getNeurons().get(1).calculateOutput());
 			List<Neuron> neurons2 = squares.get(x).getNet().getOutputLayer().getNeurons();
 			squares.get(x).move(neurons2.get(0).calculateOutput(), neurons2.get(1).calculateOutput());
@@ -104,6 +105,9 @@ public class Main extends BasicGame {
 				winners.add(deadSquares.get(deadSquares.size()-2));
 				winners.add(deadSquares.get(deadSquares.size()-3));
 				winners.add(deadSquares.get(deadSquares.size()-4));
+				for (int i = 0; i < winners.size(); i++) {
+					System.out.println(winners.get(i).getFitness());
+				}
 				for (Rectangle r: winners) {
 					r.setX(width/2);
 					r.setFitness(0);
