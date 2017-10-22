@@ -49,7 +49,7 @@ public class Rectangle {
 		this.width = r.getWidth();
 		this.height = r.getHeight();
 		startingTime = System.currentTimeMillis();
-		fitness = 0;
+		this.fitness = 0;
 		this.name = r.getName();
 		this.gen = r.getGen();
 		this.net = r.getNet();
@@ -78,8 +78,7 @@ public class Rectangle {
 	}
 	
 	public void updateFitness() {
-		fitness++;
-		//System.out.println(fitness);
+		this.fitness++;
 	}
 
 	public float getWidth() {
@@ -139,6 +138,8 @@ public class Rectangle {
 	}
 
 	public void move(double xOut, double yOut) {
+//		System.out.print(xOut);
+//		System.out.println(yOut);
 		if (xOut > yOut && x <= winWidth - width) {
 			x += 2;
 		}

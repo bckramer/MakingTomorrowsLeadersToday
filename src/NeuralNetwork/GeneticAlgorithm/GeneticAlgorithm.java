@@ -12,20 +12,20 @@ import geom.Rectangle;
 public class GeneticAlgorithm {
 	public double mutateRate;
 	private int bestPopIndex;
-	private List<Rectangle> squares;
+	private ArrayList<Rectangle> squares;
 	public int maxPop;
 	public int numTopPop;
 	private int scaleFactor = 200;
 	private int bestIndex;
 	public float bestFitness;
 	public double gene;
-	ArrayList<Rectangle> winnerArr;
+	//ArrayList<Rectangle> winnerArr;
 	private float width;
 	private float height;
 	private int generation;
 
 
-	public GeneticAlgorithm(int maxUnits,int topPerformingUnits, List<Rectangle> squares2){
+	public GeneticAlgorithm(int maxUnits,int topPerformingUnits, ArrayList<Rectangle> squares2){
 		this.squares = squares2;
 		maxPop = maxUnits;
 		numTopPop = topPerformingUnits;
@@ -45,40 +45,41 @@ public class GeneticAlgorithm {
 		this.width = width;
 		this.height = height;
 		generation = this.generation;
-		ArrayList <Rectangle> squares = new ArrayList<Rectangle>();
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta",
+		ArrayList <Rectangle> arrPop = new ArrayList<Rectangle>();
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta",
 				generation, new NeuralNet(), 0));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue, "Blue", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue, "Blue", generation,
 				new NeuralNet(), 1));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.green, "Green", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.green, "Green", generation,
 				new NeuralNet(), 2));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.yellow, "Yellow", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.yellow, "Yellow", generation,
 				new NeuralNet(), 3));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.cyan, "Cyan", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.cyan, "Cyan", generation,
 				new NeuralNet(), 4));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.orange, "Orange", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.orange, "Orange", generation,
 				new NeuralNet(), 5));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.lightGray, "Light Grey",
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.lightGray, "Light Grey",
 				generation, new NeuralNet(), 6));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation,
 				new NeuralNet(), 7));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray, "Grey", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray, "Grey", generation,
 				new NeuralNet(), 8));
-		squares.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation,
+		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation,
 				new NeuralNet(), 9));
-		return squares;
+		return arrPop;
 	}
-	public ArrayList<Rectangle> createMutatedPopulation(ArrayList<Rectangle> winners){
+	public ArrayList<Rectangle> createMutatedPopulation(ArrayList<Rectangle> population){
 		
-		return EvolvePop(winners);
+		return EvolvePop(population);
 	}
-	public ArrayList<Rectangle> EvolvePop(ArrayList<Rectangle> winners){
-		ArrayList<Rectangle> winnerArr = winners;
+	
+	public ArrayList<Rectangle> EvolvePop(ArrayList<Rectangle> population){
+		ArrayList<Rectangle> winners = selection(population);
 		
-		if(mutateRate == 0 && winnerArr.get(0).getFitness() > 250){
+		if(mutateRate == 0 && winners.get(0).getFitness() < 250){
 			createNewPopulation(width, height, generation);// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
-		else{
+		else {
 			setMutateRate(.2);
 		}
 		
@@ -86,30 +87,34 @@ public class GeneticAlgorithm {
 			Rectangle mom; Rectangle dad; Rectangle offspring;
 			Random rand = new Random();
 			if(i == getNumTopPop()){
-				 mom = winnerArr.get(0);
-				 dad = winnerArr.get(1);
+				 mom = winners.get(0);
+				 dad = winners.get(1);
 				 offspring = crossOver(mom,dad);
 			}
 			else if(i < getMaxPop() - 2){
-				 mom = winnerArr.get(rand.nextInt(winnerArr.size()- 1));
-				 dad = winnerArr.get(rand.nextInt(winnerArr.size()- 1));
+				 mom = winners.get(rand.nextInt(winners.size()));
+				 dad = winners.get(rand.nextInt(winners.size()));
 				 offspring = crossOver(mom,dad);
 			}
 			else{
-				 offspring = winnerArr.get(rand.nextInt(winnerArr.size()-1));
+				 offspring = winners.get(rand.nextInt(winners.size()-1));
 			}
 			
-			mutation(offspring);
-			offspring.setIndex(i);
-			winnerArr.add(offspring);
+			offspring = mutation(offspring);
+			
+			Rectangle a = new Rectangle(offspring);
+			a.setIndex(i);
+			
+			winners.add(offspring);
+			
+			population.set(i,a);
 		}
-		if(winnerArr.get(0).getFitness() > getBestFitness()){
-		setBestPopIndex(winnerArr.get(0).getGen());
-		setBestFitness(winnerArr.get(0).getFitness());
+		if(winners.get(0).getFitness() > bestFitness){
+			bestFitness = winners.get(0).getFitness();
 		}
-		squares = sortIndex(squares);
-		return winnerArr;
-		}
+		
+		return population;
+	}
 	
 	public ArrayList<Rectangle> sortFitness(ArrayList<Rectangle> preSort){
 		ArrayList<Rectangle> postSort = preSort;
@@ -158,29 +163,31 @@ public class GeneticAlgorithm {
 		 return rand2.nextInt(1) == 1 ? mom : dad;
 	}
 	
-	public void selection(){ //sorts by highest fitness marks top as winners and adds winners to winnersArr
+	public ArrayList<Rectangle> selection(ArrayList<Rectangle> winnerArr){ //sorts by highest fitness marks top as winners and adds winners to winnersArr
 		winnerArr = sortFitness(winnerArr);
-		for(int i = 1; i < numTopPop; i++){ //marks top units as winner
-			squares.get(i).setWinner(true);
+//		for(int i = 1; i < numTopPop; i++){ //marks top units as winner
+//			squares.get(i).setWinner(true);
+//		}
+		ArrayList<Rectangle> a = new ArrayList<Rectangle>();
+		for(int i = 0; i < 4; i++){
+			a.add(winnerArr.get(i));
 		}
-		for(int i = 0; i < numTopPop; i++){
-			winnerArr.set(i,squares.get(i));
-		}
+		return a;
 	}
-	public void mutation(Rectangle offspring){
+	public Rectangle mutation(Rectangle offspring){
 		for (int i = 0; i < offspring.getNet().getAllNeurons().size(); i++) {
 			offspring.getNet().getAllNeurons().get(i).setBias(geneMutation(offspring.getNet().getAllNeurons().get(i).getBias()));
-			//System.out.println(offspring.getNet().getAllNeurons().get(i).getBias());
 		}
 		
 		for (int i = 0; i < offspring.getNet().getAllConnections().size(); i++) {
 			offspring.getNet().getAllConnections().get(i).setWeight(geneMutation(offspring.getNet().getAllConnections().get(i).getWeight()));
 		}
+		return offspring;
 	}
 	public double geneMutation(double gene){
 		Random rand = new Random();
 		if(rand.nextDouble() < mutateRate){
-			double mutateFactor = ((rand.nextDouble() * 2 - 1));
+			double mutateFactor = 1 +((rand.nextDouble() - .5) * 3 + (rand.nextDouble() - .5));
 			 gene = gene * mutateFactor;
 		}
 		return gene;
