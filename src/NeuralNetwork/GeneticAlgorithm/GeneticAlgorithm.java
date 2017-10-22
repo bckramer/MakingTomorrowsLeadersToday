@@ -66,6 +66,11 @@ public class GeneticAlgorithm {
 				new NeuralNet(), 8));
 		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation,
 				new NeuralNet(), 9));
+		Random rand = new Random();
+		for (int x = 0; x < 990; x++) {
+			arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()), "White", generation,
+					new NeuralNet(), x+9));
+		}
 		return arrPop;
 	}
 	public ArrayList<Rectangle> createMutatedPopulation(ArrayList<Rectangle> population){
