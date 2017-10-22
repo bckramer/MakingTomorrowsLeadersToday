@@ -78,8 +78,7 @@ public class Rectangle {
 	}
 	
 	public void updateFitness() {
-		fitness++;
-		//System.out.println(fitness);
+		this.fitness++;
 	}
 
 	public float getWidth() {

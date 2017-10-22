@@ -87,7 +87,7 @@ public class Main extends BasicGame {
 			List<Neuron> neurons = squares.get(x).getNet().getInputLayer().getNeurons();
 			neurons.get(0).setOutput(squares.get(x).getClosestX().getX());
 			neurons.get(1).setOutput(squares.get(x).getClosestY().getY());
-			System.out.println(neurons.get(0).calculateOutput() + " " + neurons.get(1).calculateOutput());
+			//System.out.println(neurons.get(0).calculateOutput() + " " + neurons.get(1).calculateOutput());
 			//System.out.println(squares.get(x).getNet().getInputLayer().getNeurons().get(0).calculateOutput() + " " + squares.get(x).getNet().getInputLayer().getNeurons().get(1).calculateOutput());
 			List<Neuron> neurons2 = squares.get(x).getNet().getOutputLayer().getNeurons();
 			squares.get(x).move(neurons2.get(0).calculateOutput(), neurons2.get(1).calculateOutput());
@@ -100,14 +100,14 @@ public class Main extends BasicGame {
 				generation++;
 				triangles.clear();
 		
-				winners.add(deadSquares.get(deadSquares.size()-1));
-				winners.add(deadSquares.get(deadSquares.size()-2));
-				winners.add(deadSquares.get(deadSquares.size()-3));
-				winners.add(deadSquares.get(deadSquares.size()-4));
-				for (Rectangle r: winners) {
+//				winners.add(deadSquares.get(deadSquares.size()-1));
+//				winners.add(deadSquares.get(deadSquares.size()-2));
+//				winners.add(deadSquares.get(deadSquares.size()-3));
+//				winners.add(deadSquares.get(deadSquares.size()-4));
+				for (Rectangle r: deadSquares) {
 					r.setX(width/2);
 					r.setFitness(0);
-				}
+			}
 				/*
 				 * SpreadsheetGenerator gen = new SpreadsheetGenerator(deadSquares, fileName);
 				 * try { gen.generate(); } catch (FileNotFoundException e) { // TODO
@@ -151,11 +151,11 @@ public class Main extends BasicGame {
 		if (generation == 0) {
 			squares = ga.createNewPopulation(width, height, generation);// TODO dont hard code
 		} else {
-			squares = ga.createMutatedPopulation(winners);
+			squares = ga.createMutatedPopulation(deadSquares);
 			//System.out.println(squares);
 		}
-		winners = new ArrayList<Rectangle>();
-
+		deadSquares = new ArrayList<Rectangle>();
+		
 	}
 
 	@Override
@@ -167,6 +167,9 @@ public class Main extends BasicGame {
 		if (System.nanoTime() % 50 == 0 && maxTriangles > 2) {
 			maxTriangles--;
 		}
+		for (Rectangle r: squares) {
+			System.out.println(r.getFitness());
+	}
 
 	}
 
@@ -174,7 +177,7 @@ public class Main extends BasicGame {
 		app = new AppGameContainer(new Main("Making the Leaders of Tomorrow Today"));
 		app.setDisplayMode(width, height, false);
 		app.setFullscreen(false);
-		app.setTargetFrameRate(144);
+		app.setTargetFrameRate(1000);
 		app.setShowFPS(true);
 		app.start();
 
