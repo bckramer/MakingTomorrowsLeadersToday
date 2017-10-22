@@ -47,7 +47,7 @@ public class GeneticAlgorithm {
 		generation = this.generation;
 		ArrayList <Rectangle> arrPop = new ArrayList<Rectangle>();
 		for (int i = 0; i < populationSize; i++) {
-			arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation,
+			arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Blue", generation,
 					new NeuralNet(), 1));
 		}
 		return arrPop;
@@ -61,7 +61,7 @@ public class GeneticAlgorithm {
 		//ArrayList<Rectangle> winners = selection(population);
 		ArrayList<Rectangle> winners = new ArrayList<>();
 		
-		if(population.get(population.size() - 1).getFitness() < 400){
+		if(population.get(population.size() - 1).getFitness() < 250){
 			//System.out.println("TEST");
 			createNewPopulation(width, height, generation, population.size());// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
@@ -100,6 +100,7 @@ public class GeneticAlgorithm {
 				 dad = population.get(rand.nextInt(population.size()));
 				 offspring = new Rectangle(crossOver(mom,dad));
 				 offspring.setName("GoodBoi4");
+				 offspring = mutation(offspring);
 				 System.out.println(offspring.getNet().getTotalOutput());
 			}
 //			else{
@@ -197,7 +198,7 @@ public class GeneticAlgorithm {
 		Random rand = new Random();
 		//gene = 0;
 		if(rand.nextDouble() < mutateRate){
-			double mutateFactor = .9;
+			double mutateFactor = .95;
 			 gene = gene * mutateFactor;
 		}
 		return gene;

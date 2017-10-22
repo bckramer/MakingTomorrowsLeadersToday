@@ -149,8 +149,10 @@ public class Main extends BasicGame {
 		startTime = System.currentTimeMillis();
 		hasFallen = false;
 		maxTriangles = 100;
-		triangles.add(new Triangle(new Point(0, 250)));
-		ga = new GeneticAlgorithm(100, 4, squares);
+		triangles.add(new Triangle(new Point(width / 2, 250)));
+//		triangles.add(new Triangle(new Point(0, 250)));
+//		triangles.add(new Triangle(new Point(width - 7, 250)));
+		ga = new GeneticAlgorithm(10, 4, squares);
 		if (generation == 0) {
 			squares = ga.createNewPopulation(width, height, generation, 100);// TODO dont hard code
 		} else {

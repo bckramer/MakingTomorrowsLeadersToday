@@ -141,18 +141,24 @@ public class Rectangle {
 		System.out.print(xOut);
 		System.out.println(yOut);
 		if(xOut >= .5 && yOut >= .5){
-			if(xOut > yOut && x <= winWidth - width - 50){
+			if(xOut > yOut && x <= winWidth - width){
 				x+= 2; 
 			}
-			else if ( x >= 50){
+			else if (x >= 0){
 				x -= 2;
 			}
 		}
-		else if (xOut >= .5 && x <= winWidth - width - 50) {
+		else if (xOut >= .5 && x <= winWidth - width) {
 			x += 2;
-		} else if (yOut >= .5 && x >= 50) {
+		} else if (yOut >= .5 && x >= 0) {
 			x -= 2;
 		}
+//		if(x <= 0){
+//			x = winWidth-width - 1;
+//		}
+//		if(x>= winWidth - width){
+//			x = 1;
+//		}
 		
 	}
 
