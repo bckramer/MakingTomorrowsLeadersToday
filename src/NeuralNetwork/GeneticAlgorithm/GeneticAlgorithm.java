@@ -214,7 +214,7 @@ public class GeneticAlgorithm {
 		Random rand = new Random();
 		//gene = 0;
 		if(rand.nextDouble() < mutateRate){
-			double mutateFactor = .90;
+			double mutateFactor = .95;
 			 gene = gene * mutateFactor;
 		}
 		return gene;
