@@ -93,6 +93,7 @@ public class Main extends BasicGame {
 			neurons.get(0).setOutput(squares.get(x).getClosestX().getX() / 100);
 			neurons.get(1).setOutput(squares.get(x).getClosestY().getY() / 100);
 			List<Neuron> neurons2 = squares.get(x).getNet().getOutputLayer().getNeurons();
+			//System.out.println(neurons2.get(0).calculateOutput() + " " + neurons2.get(1).calculateOutput());
 			squares.get(x).move(neurons2.get(0).calculateOutput(), neurons2.get(1).calculateOutput());
 			//System.out.println(squares.get(x).getName() + " " + squares.get);
 			//System.out.println(neurons2.get(0).calculateOutput() + " " + neurons2.get(1).calculateOutput());
@@ -111,7 +112,7 @@ public class Main extends BasicGame {
 				for (Rectangle r: deadSquares) {
 					r.setX(width/2);
 					//r.setFitness(0);
-			}
+			     }
 				/*
 				 * SpreadsheetGenerator gen = new SpreadsheetGenerator(deadSquares, fileName);
 				 * try { gen.generate(); } catch (FileNotFoundException e) { // TODO
@@ -181,7 +182,7 @@ public class Main extends BasicGame {
 		app = new AppGameContainer(new Main("Making the Leaders of Tomorrow Today"));
 		app.setDisplayMode(width, height, false);
 		app.setFullscreen(false);
-		app.setTargetFrameRate(300);
+		app.setTargetFrameRate(500);
 		app.setShowFPS(true);
 		app.start();
 

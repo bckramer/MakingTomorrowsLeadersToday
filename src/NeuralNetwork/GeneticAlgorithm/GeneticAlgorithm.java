@@ -82,9 +82,9 @@ public class GeneticAlgorithm {
 			createNewPopulation(width, height, generation);// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
 		//System.out.println(population.get(population.size() - 1).getFitness());
-//		else {
-//			setMutateRate(.2);
-//		}
+		else {
+			//setMutateRate(.2);
+		}
 		for(int i = 0; i < population.size(); i++){
 			Rectangle mom; Rectangle dad; Rectangle offspring;
 			Random rand = new Random();
@@ -93,6 +93,7 @@ public class GeneticAlgorithm {
 				population.get(i).setNet(new NeuralNet());
 				offspring = new Rectangle(population.get(i));
 				offspring.setName("GoodBoi1");
+				//offspring = mutation(offspring);
 			}
 			
 			if(i > getNumTopPop() ) {
@@ -100,10 +101,14 @@ public class GeneticAlgorithm {
 				 dad = population.get(population.size() - 2);
 				 offspring = new Rectangle(crossOver(mom,dad));
 				 offspring.setName("GoodBoi2");
+				 //offspring = mutation(offspring);
+				 System.out.println(offspring.getNet().getTotalOutput());
 			}
 			else if (i == getNumTopPop() ) {
 				offspring = new Rectangle(population.get(population.size() - 1));
 				offspring.setName("GoodestBoi");
+				//offspring = mutation(offspring);
+				System.out.println(offspring.getNet().getTotalOutput());
 			}
 			else //if(i < getMaxPop() - 2){
 			{
@@ -111,6 +116,8 @@ public class GeneticAlgorithm {
 				 dad = population.get(rand.nextInt(population.size() - 5) + 4);
 				 offspring = new Rectangle(crossOver(mom,dad));
 				 offspring.setName("GoodBoi4");
+				 offspring = mutation(offspring);
+				 System.out.println(offspring.getNet().getTotalOutput());
 			}
 //			else{
 //				 offspring = winners.get(rand.nextInt(winners.size()-1));
@@ -120,20 +127,17 @@ public class GeneticAlgorithm {
 			
 			//Rectangle a = new Rectangle(offspring);
 			//a.setIndex(i);
-			if (offspring.getFitness() > 1000) {
-				System.out.println(offspring);
-			}
 			winners.add(offspring);
+			
 			//population.set(i, a);
 		}
 		for (Rectangle r : winners) {
 			r.setFitness(0);
 		}
-		System.out.println(winners);
+		//System.out.println(winners);
 //		if(winners.get(0).getFitness() > bestFitness){
 //			bestFitness = winners.get(0).getFitness();
-//		}
-		
+//		});
 		return winners;
 	}
 	
@@ -208,8 +212,9 @@ public class GeneticAlgorithm {
 	}
 	public double geneMutation(double gene){
 		Random rand = new Random();
+		//gene = 0;
 		if(rand.nextDouble() < mutateRate){
-			double mutateFactor = 1 +((rand.nextDouble() - .5) * 3 + (rand.nextDouble() - .5));
+			double mutateFactor = .90;
 			 gene = gene * mutateFactor;
 		}
 		return gene;

@@ -140,9 +140,9 @@ public class Rectangle {
 	public void move(double xOut, double yOut) {
 //		System.out.print(xOut);
 //		System.out.println(yOut);
-		if (xOut >= .6 && x <= winWidth - width) {
+		if (xOut >= .5 && x <= winWidth - width) {
 			x += 2;
-		} else if (yOut >= .6 && x >= 0) {
+		} else if (yOut >= .5 && x >= 0) {
 			x -= 2;
 		}
 	}
