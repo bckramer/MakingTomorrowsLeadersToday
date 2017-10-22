@@ -138,13 +138,22 @@ public class Rectangle {
 	}
 
 	public void move(double xOut, double yOut) {
-//		System.out.print(xOut);
-//		System.out.println(yOut);
-		if (xOut >= .5 && x <= winWidth - width) {
+		System.out.print(xOut);
+		System.out.println(yOut);
+		if(xOut >= .5 && yOut >= .5){
+			if(xOut > yOut && x <= winWidth - width - 50){
+				x+= 2; 
+			}
+			else if ( x >= 50){
+				x -= 2;
+			}
+		}
+		else if (xOut >= .5 && x <= winWidth - width - 50) {
 			x += 2;
-		} else if (yOut >= .5 && x >= 0) {
+		} else if (yOut >= .5 && x >= 50) {
 			x -= 2;
 		}
+		
 	}
 
 	public void getClosestXTrianglePosition(ArrayList<Triangle> triangles) {

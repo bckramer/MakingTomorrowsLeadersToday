@@ -41,31 +41,15 @@ public class GeneticAlgorithm {
 		bestPopIndex = -1;
 		bestFitness = -1;
 	}
-	public ArrayList<Rectangle> createNewPopulation(float width, float height, int generation){
+	public ArrayList<Rectangle> createNewPopulation(float width, float height, int generation, int populationSize){
 		this.width = width;
 		this.height = height;
 		generation = this.generation;
 		ArrayList <Rectangle> arrPop = new ArrayList<Rectangle>();
-		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Magenta",
-				generation, new NeuralNet(), 0));
-		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.blue, "Blue", generation,
-				new NeuralNet(), 1));
-		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.green, "Green", generation,
-				new NeuralNet(), 2));
-		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.yellow, "Yellow", generation,
-				new NeuralNet(), 3));
-		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.cyan, "Cyan", generation,
-				new NeuralNet(), 4));
-		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.orange, "Orange", generation,
-				new NeuralNet(), 5));
-		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.lightGray, "Light Grey",
-				generation, new NeuralNet(), 6));
-		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation,
-				new NeuralNet(), 7));
-		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.gray, "Grey", generation,
-				new NeuralNet(), 8));
-		arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.white, "White", generation,
-				new NeuralNet(), 9));
+		for (int i = 0; i < populationSize; i++) {
+			arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.pink, "Pink", generation,
+					new NeuralNet(), 1));
+		}
 		return arrPop;
 	}
 	public ArrayList<Rectangle> createMutatedPopulation(ArrayList<Rectangle> population){
@@ -79,17 +63,17 @@ public class GeneticAlgorithm {
 		
 		if(population.get(population.size() - 1).getFitness() < 400){
 			//System.out.println("TEST");
-			createNewPopulation(width, height, generation);// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
+			createNewPopulation(width, height, generation, population.size());// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
 		//System.out.println(population.get(population.size() - 1).getFitness());
 		else {
-			//setMutateRate(.2);
+			setMutateRate(.2);
 		}
-		for(int i = 0; i < population.size(); i++){
+		for(int i = 0; i < population.size() - 1; i++){
 			Rectangle mom; Rectangle dad; Rectangle offspring;
 			Random rand = new Random();
 			
-			if (population.get(i).getFitness() < 400) {
+			if (population.get(i).getFitness() < 250) {
 				population.get(i).setNet(new NeuralNet());
 				offspring = new Rectangle(population.get(i));
 				offspring.setName("GoodBoi1");
@@ -112,11 +96,10 @@ public class GeneticAlgorithm {
 			}
 			else //if(i < getMaxPop() - 2){
 			{
-				 mom = population.get(rand.nextInt(population.size() - 5) + 4) ;
-				 dad = population.get(rand.nextInt(population.size() - 5) + 4);
+				 mom = population.get(population.size() - 1) ;
+				 dad = population.get(rand.nextInt(population.size()));
 				 offspring = new Rectangle(crossOver(mom,dad));
 				 offspring.setName("GoodBoi4");
-				 offspring = mutation(offspring);
 				 System.out.println(offspring.getNet().getTotalOutput());
 			}
 //			else{
@@ -214,7 +197,7 @@ public class GeneticAlgorithm {
 		Random rand = new Random();
 		//gene = 0;
 		if(rand.nextDouble() < mutateRate){
-			double mutateFactor = .95;
+			double mutateFactor = .9;
 			 gene = gene * mutateFactor;
 		}
 		return gene;
