@@ -1,6 +1,7 @@
 package GeneticAlgorithm;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.newdawn.slick.Color;
@@ -11,7 +12,7 @@ import geom.Rectangle;
 public class GeneticAlgorithm {
 	public double mutateRate;
 	private int bestPopIndex;
-	private ArrayList<Rectangle> squares;
+	private List<Rectangle> squares;
 	public int maxPop;
 	public int numTopPop;
 	private int scaleFactor = 200;
@@ -24,8 +25,8 @@ public class GeneticAlgorithm {
 	private int generation;
 
 
-	public GeneticAlgorithm(int maxUnits,int topPerformingUnits, ArrayList<Rectangle> squares){
-		this.squares = squares;
+	public GeneticAlgorithm(int maxUnits,int topPerformingUnits, List<Rectangle> squares2){
+		this.squares = squares2;
 		maxPop = maxUnits;
 		numTopPop = topPerformingUnits;
 		mutateRate = 1;
@@ -67,9 +68,9 @@ public class GeneticAlgorithm {
 				new NeuralNet(), 9));
 		return squares;
 	}
-	public ArrayList<Rectangle> createMutatedPopulation(ArrayList<Rectangle> arrNewPop){
+	public ArrayList<Rectangle> createMutatedPopulation(ArrayList<Rectangle> winners){
 		
-		return EvolvePop(arrNewPop);
+		return EvolvePop(winners);
 	}
 	public ArrayList<Rectangle> EvolvePop(ArrayList<Rectangle> winners){
 		ArrayList<Rectangle> winnerArr = winners;
@@ -127,8 +128,8 @@ public class GeneticAlgorithm {
 		}
 		return postSort;
 	}
-	public ArrayList<Rectangle> sortIndex(ArrayList<Rectangle> squares2){
-		ArrayList<Rectangle> postSort = squares2;
+	public List<Rectangle> sortIndex(List<Rectangle> squares2){
+		List<Rectangle> postSort = squares2;
 		
 		for(int i = 0; i < postSort.size() - 1; i++){
 			int min = i;
@@ -195,7 +196,7 @@ public class GeneticAlgorithm {
 	public void setBestPopIndex(int bestPopIndex) {
 		this.bestPopIndex = bestPopIndex;
 	}
-	public ArrayList<Rectangle> getSquares() {
+	public List<Rectangle> getSquares() {
 		return squares;
 	}
 	public void setPopulationArr(ArrayList<Rectangle> squares) {

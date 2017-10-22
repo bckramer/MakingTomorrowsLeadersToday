@@ -28,11 +28,11 @@ public class NeuralNet {
         //Input Layer
         Random rand = new Random();
         double output = rand.nextDouble() * 2 - 1;
-        double bias = rand.nextDouble() * 2 - 1;
+        double bias = rand.nextDouble() * 1000 - 1;
         Neuron neuronIA = new Neuron(output, bias);
         Random rand2 = new Random();
         double output1 = rand2.nextDouble() * 2 - 1;
-        double bias1 = rand2.nextDouble() * 2 - 1;
+        double bias1 = rand2.nextDouble() * 1000 - 1;
         Neuron neuronIB = new Neuron(output1, bias1);
         ArrayList<Neuron> inputLayerNeurons = new ArrayList<>();
         inputLayerNeurons.add(neuronIA);

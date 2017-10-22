@@ -78,8 +78,8 @@ public class Rectangle {
 	}
 	
 	public void updateFitness() {
-		fitness = System.currentTimeMillis() - startingTime;
-		System.out.println(fitness);
+		fitness++;
+		//System.out.println(fitness);
 	}
 
 	public float getWidth() {
@@ -139,12 +139,10 @@ public class Rectangle {
 	}
 
 	public void move(double xOut, double yOut) {
-		double output = (xOut > yOut) ? xOut : yOut;
-		//System.out.println(xOut + " " + yOut);
-		if (xOut >= .5 && x <= winWidth - width) {
+		if (xOut > yOut && x <= winWidth - width) {
 			x += 2;
 		}
-		if (yOut >= .5 && x >= 0) {
+		else if (yOut > xOut && x >= 0) {
 			x -= 2;
 		}
 	}
@@ -242,6 +240,15 @@ public class Rectangle {
 	public String toString() {
 		return "Rectangle [x=" + x + ", y=" + y + ", fitness=" + fitness + ", gen=" + gen + ", net=" + net + ", winner="
 				+ winner + "]";
+	}
+
+	public void setFitness(int i) {
+		fitness = i;
+	}
+
+	public void setStartingTime() {
+		startingTime = System.currentTimeMillis();
+		
 	}
 
 }

@@ -36,14 +36,15 @@ public class Main extends BasicGame {
 	private int generation = 0;
 	private String fileName = System.getProperty("user.home") + "\\desktop\\recs";
 	private boolean hasFallen;
+	GeneticAlgorithm ga ;
 
 	public Main(String title) {
 		super(title);
 		triangles = new ArrayList<Triangle>();
 		squares = new ArrayList<Rectangle>();
 		deadSquares = new ArrayList<Rectangle>();
-		System.out.println(new Color(Color.white));
 		hasFallen = false;
+		ga = null;
 	}
 
 	@Override
@@ -80,26 +81,33 @@ public class Main extends BasicGame {
 			g.drawLine(squares.get(x).getX() + squares.get(x).getWidth() / 2, squares.get(x).getY(), py.getX(),
 					py.getY());
 
-			if (hasFallen) {
 				squares.get(x).updateFitness();
-			}
+		
 
 			List<Neuron> neurons = squares.get(x).getNet().getInputLayer().getNeurons();
 			neurons.get(0).setOutput(squares.get(x).getClosestX().getX());
 			neurons.get(1).setOutput(squares.get(x).getClosestY().getY());
-
+			System.out.println(neurons.get(0).calculateOutput() + " " + neurons.get(1).calculateOutput());
+			//System.out.println(squares.get(x).getNet().getInputLayer().getNeurons().get(0).calculateOutput() + " " + squares.get(x).getNet().getInputLayer().getNeurons().get(1).calculateOutput());
 			List<Neuron> neurons2 = squares.get(x).getNet().getOutputLayer().getNeurons();
 			squares.get(x).move(neurons2.get(0).calculateOutput(), neurons2.get(1).calculateOutput());
+			//System.out.println(neurons2.get(0).calculateOutput() + " " + neurons2.get(1).calculateOutput());
 			if (squares.get(x).collidesWithTriangle(triangles)) {
-				if (squares.size() <= 3) {//maybe a problem?
-					winners.add(squares.get(x));
-				}
 				deadSquares.add(squares.remove(x));
 			}
 			if (squares.size() == 0) {
+				
 				generation++;
 				triangles.clear();
-
+		
+				winners.add(deadSquares.get(deadSquares.size()-1));
+				winners.add(deadSquares.get(deadSquares.size()-2));
+				winners.add(deadSquares.get(deadSquares.size()-3));
+				winners.add(deadSquares.get(deadSquares.size()-4));
+				for (Rectangle r: winners) {
+					r.setX(width/2);
+					r.setFitness(0);
+				}
 				/*
 				 * SpreadsheetGenerator gen = new SpreadsheetGenerator(deadSquares, fileName);
 				 * try { gen.generate(); } catch (FileNotFoundException e) { // TODO
@@ -139,12 +147,12 @@ public class Main extends BasicGame {
 		triangles.add(new Triangle(new Point(width / 2, 250)));
 		triangles.add(new Triangle(new Point(0, 250)));
 		triangles.add(new Triangle(new Point(width - 7, 250)));
-		GeneticAlgorithm ga = new GeneticAlgorithm(10, 4, squares);
+		ga = new GeneticAlgorithm(10, 4, squares);
 		if (generation == 0) {
 			squares = ga.createNewPopulation(width, height, generation);// TODO dont hard code
 		} else {
 			squares = ga.createMutatedPopulation(winners);
-			System.out.println(squares);
+			//System.out.println(squares);
 		}
 		winners = new ArrayList<Rectangle>();
 
