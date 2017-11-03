@@ -159,7 +159,7 @@ public class Main extends BasicGame {
 		app = new AppGameContainer(new Main("Making the Leaders of Tomorrow Today"));
 		app.setDisplayMode(width, height, false);
 		app.setFullscreen(false);
-		app.setTargetFrameRate(200);
+		app.setTargetFrameRate(1000);
 		app.setShowFPS(true);
 		app.start();
 

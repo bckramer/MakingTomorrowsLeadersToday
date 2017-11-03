@@ -151,7 +151,7 @@ public class Rectangle {
 		else if (xOut >= .5 && x <= winWidth - width) {
 		if (xOut >= .6 && x <= winWidth - width) {
 			x += 2;
-		} else if (yOut >= .6 && x >= 2) {
+		} else if (yOut >= .5 && x >= 2) {
 			x -= 2;
 			}
 		}
@@ -176,7 +176,7 @@ public class Rectangle {
 				if (Math.abs((x + (width / 2) - ctr)) > Math.abs(xtr - (x + width / 2))) {
 					closestTopRight = triangles.get(i).getTopRight();
 				}
-				if (Math.abs(ctl - (x + (width / 2))) > Math.abs((x + (width / 2) - ctr))) {
+				if (Math.abs(ctl - (x + (width / 2))) > Math.abs((x + (width / 2) - ctr))  && close != closestTopRight) {
 					close = closestTopRight;
 				} else {
 					close = closestTopLeft;
