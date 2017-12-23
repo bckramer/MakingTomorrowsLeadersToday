@@ -90,7 +90,7 @@ public class NeuralNet {
             outputLayerNeurons.get(i).setInputConnections(connections);
         }
 
-        //Initializing the output of all nodes
+        //Inititializing the output of all ndoes
         for (Neuron neuron : inputLayerNeurons) {
             neuron.calculateOutput();
         }
@@ -166,4 +166,9 @@ public class NeuralNet {
                 ", outputLayer=" + outputLayer +
                 '}';
     }
+
+	public char[] getTotalOutput() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

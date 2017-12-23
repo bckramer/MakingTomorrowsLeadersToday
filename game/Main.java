@@ -30,12 +30,13 @@ public class Main extends BasicGame {
 	public ArrayList<Rectangle> squares;
 	private ArrayList<Rectangle> deadSquares;
 	private ArrayList<Rectangle> winners;
+	private Rectangle best;
 	private int maxTriangles = 100;
 	private long startTime;
 	private int generation = 0;
 	private String fileName = System.getProperty("user.home") + "\\desktop\\recs";
 	private boolean hasFallen;
-	GeneticAlgorithm ga ;
+	GeneticAlgorithm ga;
 
 	public Main(String title) {
 		super(title);
@@ -80,25 +81,35 @@ public class Main extends BasicGame {
 			g.drawLine(squares.get(x).getX() + squares.get(x).getWidth() / 2, squares.get(x).getY(), py.getX(),
 					py.getY());
 
-				squares.get(x).updateFitness();
-		
+			squares.get(x).updateFitness();
 
 			List<Neuron> neurons = squares.get(x).getNet().getInputLayer().getNeurons();
-			neurons.get(0).setOutput(squares.get(x).getClosestX().getX() / 100);
-			neurons.get(1).setOutput(squares.get(x).getClosestY().getY() / 100);
+			neurons.get(0).setOutput(squares.get(x).getClosestX().getX() / 150);
+			neurons.get(1).setOutput(squares.get(x).getClosestY().getY() / 150);
 			List<Neuron> neurons2 = squares.get(x).getNet().getOutputLayer().getNeurons();
 			squares.get(x).move(neurons2.get(0).calculateOutput(), neurons2.get(1).calculateOutput());
-			if (squares.get(x).collidesWithTriangle(triangles)) {
+			
+			if (squares.get(x).collidesWithTriangle(triangles) || squares.get(x).atWall()) {
 				deadSquares.add(squares.remove(x));
 			}
 			if (squares.size() == 0) {
-				
+
 				generation++;
 				triangles.clear();
-		
-				for (Rectangle r: deadSquares) {
-					r.setX(width/2);
-			}
+
+				for (Rectangle r : deadSquares) {
+					r.setX(width / 2);
+					if (r.compareFitness(best)) {
+						best.lockFitness();
+						best = r;
+						System.out.println("Found best");
+					}
+				}
+				for (int i = 0; i < deadSquares.size(); i++) {
+					if (i < deadSquares.size()/2) {
+						deadSquares.remove(i);
+					}
+				}
 				init(gc);
 			}
 		}
@@ -128,19 +139,22 @@ public class Main extends BasicGame {
 	public void init(GameContainer arg0) throws SlickException {
 		startTime = System.currentTimeMillis();
 		hasFallen = false;
-		maxTriangles = 45;
+		maxTriangles = 25;
 		triangles.add(new Triangle(new Point(width / 2, 250)));
-		triangles.add(new Triangle(new Point(0, 250)));
+		triangles.add(new Triangle(new Point(0, 325)));
 		triangles.add(new Triangle(new Point(width - 7, 250)));
-		ga = new GeneticAlgorithm(10, 4, squares);
 		if (generation == 0) {
+			ga = new GeneticAlgorithm(10, 4, squares);
 			squares = ga.createNewPopulation(width, height, generation, 10);
+			best = squares.get(0);
 		} else {
+			System.out.println();
+			deadSquares.add(best);
 			squares = ga.createMutatedPopulation(deadSquares);
-			System.out.println(squares);
+			System.out.println(squares.size());
 		}
-		deadSquares = new ArrayList<Rectangle>();
-		
+		deadSquares.clear();
+
 	}
 
 	@Override
@@ -152,6 +166,12 @@ public class Main extends BasicGame {
 		if (System.nanoTime() % 50 == 0 && maxTriangles > 15) {
 			maxTriangles--;
 		}
+		if (System.nanoTime() % 152000 == 0) {
+
+			triangles.add(new Triangle(new Point(width / 2, 250)));
+			triangles.add(new Triangle(new Point(0, 325)));
+			triangles.add(new Triangle(new Point(width - 7, 250)));
+		}
 
 	}
 
@@ -159,7 +179,9 @@ public class Main extends BasicGame {
 		app = new AppGameContainer(new Main("Making the Leaders of Tomorrow Today"));
 		app.setDisplayMode(width, height, false);
 		app.setFullscreen(false);
-		app.setTargetFrameRate(200);
+		app.setTargetFrameRate(250);
+		app.setAlwaysRender(true);
+		app.setUpdateOnlyWhenVisible(false);
 		app.setShowFPS(true);
 		app.start();
 

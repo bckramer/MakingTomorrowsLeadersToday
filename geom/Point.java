@@ -29,6 +29,10 @@ public class Point {
 		this.y = y;
 	}
 	
+	public float getDistance(Point p) {
+		return (float) Math.sqrt(Math.pow(p.getX() - x, 2) + Math.pow(p.getY() - y, 2));
+	}
+	
 	public void modifyY(float yDiff) {
 		y+=yDiff;
 	}

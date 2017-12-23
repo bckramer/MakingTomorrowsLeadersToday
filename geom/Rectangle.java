@@ -20,8 +20,10 @@ public class Rectangle {
 	private NeuralNet net;
 	private boolean winner;
 	private int index;
+	boolean locked;
 
-	public Rectangle(float x, float y, float width, float height, float winWidth, float winHeight, Color c, String name, int gen, NeuralNet net, int index) {
+	public Rectangle(float x, float y, float width, float height, float winWidth, float winHeight, Color c, String name,
+			int gen, NeuralNet net, int index) {
 		this.x = x;
 		this.y = y;
 		this.c = c;
@@ -31,7 +33,7 @@ public class Rectangle {
 		fitness = 0;
 		if (name == null) {
 			name = "Untitled";
-		}else {
+		} else {
 			this.name = name;
 		}
 		this.gen = gen;
@@ -39,9 +41,10 @@ public class Rectangle {
 		this.winWidth = winWidth;
 		this.winHeight = winHeight;
 		winner = false;
-		
+		locked = false;
+
 	}
-	
+
 	public Rectangle(Rectangle r) {
 		this.x = r.getX();
 		this.y = r.getY();
@@ -56,13 +59,19 @@ public class Rectangle {
 		this.winWidth = r.getWinWidth();
 		this.winHeight = r.getWinHeight();
 		winner = r.getWinner();
+		locked = false;;
+		this.closestX = r.getClosestX();
+		this.closestY = r.getClosestY();
+		this.index = r.getIndex();
+		
+
 	}
 
 	public boolean getWinner() {
 		return winner;
 	}
 
-	//I'm so sorry
+	// I'm so sorry
 	public boolean collidesWithTriangle(ArrayList<Triangle> tris) {
 		org.newdawn.slick.geom.Rectangle rec = new org.newdawn.slick.geom.Rectangle(x, y, width, height);
 		for (int x = 0; x < tris.size(); x++) {
@@ -76,9 +85,11 @@ public class Rectangle {
 		}
 		return false;
 	}
-	
+
 	public void updateFitness() {
-		this.fitness++;
+		if (!locked)
+			this.fitness++;
+		System.out.println(fitness);
 	}
 
 	public float getWidth() {
@@ -138,21 +149,19 @@ public class Rectangle {
 	}
 
 	public void move(double xOut, double yOut) {
-		System.out.print(xOut);
-		System.out.println(yOut);
-		if(xOut >= .5 && yOut >= .5){
-			if(xOut > yOut && x <= winWidth - width){
-				x+= 2; 
-			}
-			else if (x >= 2){
-				x -= 2;
-			}
-		}
-		else if (xOut >= .5 && x <= winWidth - width) {
+		// System.out.print(xOut);
+		// System.out.println(yOut);
 		if (xOut >= .6 && x <= winWidth - width) {
 			x += 2;
-		} else if (yOut >= .6 && x >= 2) {
-			x -= 2;
+		} else if (yOut >= .6 && x >= 0) {
+			if (xOut >= .5 && x <= winWidth - width) {
+				x += 2;
+			} else if (yOut >= .5 && x >= 0) {
+				if (xOut >= .6 && x <= winWidth - width) {
+					x += 2;
+				} else if (yOut >= .6 && x >= 0) {
+					x -= 2;
+				}
 			}
 		}
 		
@@ -164,25 +173,28 @@ public class Rectangle {
 			Point closestTopLeft = closest.getTopLeft();
 			Point closestTopRight = closest.getTopRight();
 			Point close = closestTopLeft;
+			Point close2 = closestTopRight;
 			for (int i = 0; i < triangles.size(); i++) {
-				float ctl = closestTopLeft.getX();
-				float xtl = triangles.get(i).getTopLeft().getX();
-				float ctr = closestTopRight.getX();
-				float xtr = triangles.get(i).getTopRight().getX();
-
-				if (Math.abs(ctl - (x + (width / 2))) > Math.abs((x + width / 2) - xtl)) {
-					closestTopLeft = triangles.get(i).getTopLeft();
+				Point center = new Point(triangles.get(i).getBottom().getX(), triangles.get(i).getTopLeft().getY());
+				if (center.getDistance(new Point(x + width / 2, y)) < close.getDistance(new Point(x + width / 2, y))) {
+					close2 = center;
+					close = center;
 				}
-				if (Math.abs((x + (width / 2) - ctr)) > Math.abs(xtr - (x + width / 2))) {
-					closestTopRight = triangles.get(i).getTopRight();
-				}
-				if (Math.abs(ctl - (x + (width / 2))) > Math.abs((x + (width / 2) - ctr))) {
-					close = closestTopRight;
-				} else {
-					close = closestTopLeft;
-				}
+				/*
+				 * float ctl = closestTopLeft.getX(); float xtl =
+				 * triangles.get(i).getTopLeft().getX(); float ctr = closestTopRight.getX();
+				 * float xtr = triangles.get(i).getTopRight().getX();
+				 * 
+				 * if (Math.abs(ctl - (x + (width / 2))) > Math.abs((x + width / 2) - xtl)) {
+				 * closestTopLeft = triangles.get(i).getTopLeft(); } if (Math.abs((x + (width /
+				 * 2) - ctr)) > Math.abs(xtr - (x + width / 2))) { closestTopRight =
+				 * triangles.get(i).getTopRight(); } if (Math.abs(ctl - (x + (width / 2))) >
+				 * Math.abs((x + (width / 2) - ctr))) { close = closestTopRight; } else { close
+				 * = closestTopLeft; }
+				 */
+				closestX = close;
+				closestY = new Point(x + width/2, y+height/2);;
 			}
-			closestX = close;
 		}
 	}
 
@@ -195,8 +207,23 @@ public class Rectangle {
 					closest = triangles.get(x).getBottom();
 				}
 			}
-			closestY = closest;
+			//closestY = closest;
 		}
+	}
+	
+	public boolean atWall() {
+		return x <= 16 || x >= winWidth-width-16;
+	}
+
+	public void lockFitness() {
+		locked = true;
+	}
+
+	public boolean compareFitness(Rectangle r) {
+		if (fitness > r.getFitness()) {
+			return true;
+		}
+		return false;
 	}
 
 	public Point getClosestX() {
@@ -218,7 +245,7 @@ public class Rectangle {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public int getGen() {
 		return gen;
 	}
@@ -249,8 +276,8 @@ public class Rectangle {
 
 	@Override
 	public String toString() {
-		return "Rectangle " + name + " [x=" + x + ", y=" + y + ", fitness=" + fitness + ", gen=" + gen + ", net=" + net + ", winner="
-				+ winner + "]";
+		return "Rectangle " + name + " [x=" + x + ", y=" + y + ", fitness=" + fitness + ", gen=" + gen + ", net=" + net
+				+ ", winner=" + winner + "]";
 	}
 
 	public void setFitness(int i) {
@@ -259,7 +286,7 @@ public class Rectangle {
 
 	public void setStartingTime() {
 		startingTime = System.currentTimeMillis();
-		
+
 	}
 
 }

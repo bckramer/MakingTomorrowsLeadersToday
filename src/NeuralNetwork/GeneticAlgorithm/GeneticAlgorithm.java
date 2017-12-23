@@ -28,14 +28,14 @@ public class GeneticAlgorithm {
 		this.squares = squares2;
 		maxPop = maxUnits;
 		numTopPop = topPerformingUnits;
-		mutateRate = 1;
+		mutateRate = .5;
 		if(maxPop < numTopPop){
 			numTopPop = maxPop;
 		}
 	}
 	public void clearGeneticAlgorithm(ArrayList<Rectangle> squares){
 		this.squares = squares;
-		mutateRate = 1;
+		mutateRate = .5;
 
 		bestPopIndex = -1;
 		bestFitness = -1;
@@ -45,8 +45,10 @@ public class GeneticAlgorithm {
 		this.height = height;
 		generation = this.generation;
 		ArrayList <Rectangle> arrPop = new ArrayList<Rectangle>();
+		Random rand = new Random();
 		for (int i = 0; i < populationSize; i++) {
-			arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, Color.magenta, "Blue", generation,
+			
+			arrPop.add(new Rectangle(width / 2, height - 15, 15, 15, width, height, new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()), "Blue", generation,
 					new NeuralNet(), 1));
 		}
 		return arrPop;
@@ -59,7 +61,7 @@ public class GeneticAlgorithm {
 	public ArrayList<Rectangle> EvolvePop(ArrayList<Rectangle> population){
 		ArrayList<Rectangle> winners = new ArrayList<>();
 		
-		if(population.get(population.size() - 1).getFitness() < 250){
+		if(population.get(population.size() - 1).getFitness() < 325){
 			createNewPopulation(width, height, generation, population.size());// If the best unit from the initial population has a negative fitness ;// If the best unit from the initial population has a negative fitness 
 		}
 		else {
